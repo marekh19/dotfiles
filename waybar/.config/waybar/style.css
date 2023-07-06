@@ -1,0 +1,65 @@
+* {
+  border: none;
+  font-family: 'JetBrainsMono NF Medium';
+  font-size: 16px;
+  font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+  min-height: 28px;
+}
+
+window#waybar {
+  background: transparent;
+}
+
+#custom-eos, #workspaces {
+  border-radius: 8px;
+  background-color: #1e1e2e;
+  color: #b4befe;
+  margin-top: 12px;
+	margin-right: 12px;
+  padding-top: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#custom-eos {
+  font-size: 20px;
+  margin-left: 12px;
+  color: #b4befe;
+}
+
+#workspaces button {
+  background: #1e1e2e;
+  color: #b4befe;
+}
+
+#clock, #backlight, #pulseaudio, #bluetooth, #network, #battery, #memory, #disk, #disk.games {
+  border-radius: 8px;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  margin-top: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 12px;
+}
+
+#bluetooth {
+  margin-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#network {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#disk {
+  margin-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#disk.games {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}

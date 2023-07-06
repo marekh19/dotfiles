@@ -1,0 +1,66 @@
+{
+  "layer": "top",
+    "modules-left": ["custom/eos", "wlr/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", "memory", "disk", "disk#games", "bluetooth", "network"],
+    "custom/eos": {
+      "format": " ",
+      "tooltip": false,
+      "on-click": "sh $HOME/.config/rofi/bin/powermenu"
+    },
+    "wlr/workspaces": {
+      "format": "{name}",
+      "format": "{icon}",
+      "tooltip": false,
+      "all-outputs": true,
+      "format-icons": {
+        "active": "",
+        "default": ""
+      }
+    },
+    "clock": {
+      "format": "<span color='#b4befe'> </span>{:%H:%M}",
+      "tooltip": true,
+      "tooltip-format": "<span color='#b4befe'>󰃮 </span>{:%a %d.%Om.%Y}"
+    },
+    "pulseaudio": {
+      "format": "<span color='#b4befe'>{icon}</span> {volume}%",
+      "format-muted": "<span color='#f38ba8'> off</span>",
+      "tooltip": false,
+      "format-icons": {
+        "headphone": "",
+        "default": ["", "", "󰕾", "󰕾", "󰕾", "", "", ""]
+      },
+      "scroll-step": 5,
+    },
+    "bluetooth": {
+      "format": "<span color='#b4befe'></span> {status}",
+      "format-disabled": "", // an empty format will hide the module
+      "format-connected": "<span color='#b4befe'></span> {num_connections}",
+      "tooltip-format": "{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias}   {device_address}"
+    },
+    "network":{
+      "interface": "enp7s0",
+      "format": "{ifname}",
+      "format-wifi": "<span color='#b4befe'> </span>{essid}",
+      "format-ethernet": "󰈀 ok",
+      "format-disconnected": "<span color='#b4befe'>󰖪 </span>No Network",
+      "tooltip": false,
+    },
+    "memory": {
+      "interval": 5,
+      "format": " {used:0.1f}G / {total:0.1f}G"
+    },
+    "disk": {
+    "interval": 30,
+    "format": " {percentage_free}% free",
+    "path": "/"
+    },
+    "disk#games": {
+    "interval": 30,
+    "format": " {percentage_free}% free",
+    "path": "/home/marekh19/Games"
+    },
+  }
+}
