@@ -5,6 +5,7 @@ return {
     opts = {
       user_default_options = {
         tailwind = true,
+        hsl_fn = true,
       },
     },
   },
