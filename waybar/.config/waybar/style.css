@@ -1,6 +1,6 @@
 * {
   border: none;
-  font-family: 'JetBrainsMono NF Medium';
+  font-family: "JetBrainsMono NF Medium";
   font-size: 16px;
   font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
   min-height: 28px;
@@ -10,12 +10,13 @@ window#waybar {
   background: transparent;
 }
 
-#custom-eos, #workspaces {
+#custom-eos,
+#workspaces {
   border-radius: 8px;
   background-color: #1e1e2e;
   color: #b4befe;
   margin-top: 12px;
-	margin-right: 12px;
+  margin-right: 12px;
   padding-top: 1px;
   padding-left: 10px;
   padding-right: 10px;
@@ -32,7 +33,15 @@ window#waybar {
   color: #b4befe;
 }
 
-#clock, #backlight, #pulseaudio, #bluetooth, #network, #battery, #memory, #disk, #disk.games {
+#clock,
+#backlight,
+#pulseaudio,
+#bluetooth,
+#network,
+#battery,
+#memory,
+#disk,
+#disk.games {
   border-radius: 8px;
   background-color: #1e1e2e;
   color: #cdd6f4;
@@ -62,4 +71,14 @@ window#waybar {
 #disk.games {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+#tray {
+  border-radius: 8px;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  margin-top: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 12px;
 }

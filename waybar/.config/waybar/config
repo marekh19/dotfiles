@@ -2,7 +2,7 @@
   "layer": "top",
     "modules-left": ["custom/eos", "wlr/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "memory", "disk", "disk#games", "bluetooth", "network"],
+    "modules-right": ["pulseaudio", "memory", "disk", "disk#games", "bluetooth", "network", "tray"],
     "custom/eos": {
       "format": " ",
       "tooltip": false,
@@ -62,5 +62,8 @@
     "format": " {percentage_free}% free",
     "path": "/home/marekh19/Games"
     },
+    "tray": {
+      "icon-size": 20, "spacing": 8,
+      },
   }
 }
