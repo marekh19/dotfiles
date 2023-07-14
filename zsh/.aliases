@@ -13,6 +13,7 @@ alias gc="git commit -m"
 alias gs="git status"
 alias gp="git push"
 alias gf="git fetch"
+alias lg="lazygit"
 
 # Utils
 alias vim="nvim"
