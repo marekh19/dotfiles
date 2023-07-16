@@ -1,10 +1,10 @@
+#!/usr/bin/env zsh
 # Basic
 alias ls="lsd"
-alias l="ls -l"
+alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
-alias lt="ls --tree"
-alias lta="la --tree --ignore-glob .git"
+alias lt="ls -a --tree --ignore-glob .git --ignore-glob node_modules --ignore-glob .next"
 
 # Git
 alias ga="git add ."

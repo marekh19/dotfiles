@@ -6,6 +6,11 @@ return {
       window = {
         width = 26,
       },
+      filesystem = {
+        filtered_items = {
+          visible = true,
+        },
+      },
     },
   },
 }
