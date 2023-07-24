@@ -8,7 +8,7 @@ HISTFILE=~/.zsh_history
 plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
-plug "zap-zsh/vim"
+# plug "zap-zsh/vim"
 # plug "zap-zsh/zap-prompt"
 
 # source
