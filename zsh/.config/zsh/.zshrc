@@ -4,7 +4,6 @@
 # history
 HISTFILE=~/.zsh_history
 
-
 # plugins
 plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-autosuggestions"

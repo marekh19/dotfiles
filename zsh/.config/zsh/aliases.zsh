@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 # Basic
 alias ls="lsd"
 alias ll="ls -l"
