@@ -1,6 +1,6 @@
 {
   "layer": "top",
-    "modules-left": ["custom/eos", "wlr/workspaces"],
+    "modules-left": ["custom/eos", "hyprland/workspaces"],
     "modules-center": ["clock"],
     "modules-right": ["pulseaudio", "memory", "disk", "disk#games", "bluetooth", "network", "tray"],
     "custom/eos": {
@@ -8,7 +8,7 @@
       "tooltip": false,
       "on-click": "sh $HOME/.config/rofi/bin/powermenu"
     },
-    "wlr/workspaces": {
+    "hyprland/workspaces": {
       "format": "{name}",
       "format": "{icon}",
       "tooltip": false,
