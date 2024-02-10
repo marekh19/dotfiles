@@ -10,7 +10,6 @@
     "pulseaudio",
     "memory",
     "bluetooth",
-    "network",
     "hyprland/language",
     "tray"
   ],
