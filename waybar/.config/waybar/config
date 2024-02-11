@@ -1,44 +1,46 @@
 {
   "layer": "top",
-  "spacing": 10,
-  "margin-top": 12,
-  "margin-left": 14,
-  "margin-right": 14,
-  "modules-left": ["custom/logo", "hyprland/workspaces"],
-  "modules-center": ["clock"],
+  "spacing": 16,
+  "margin-top": 10,
+  "margin-left": 12,
+  "margin-right": 12,
+  "modules-left": ["hyprland/workspaces"],
   "modules-right": [
-    "pulseaudio",
-    "memory",
-    "bluetooth",
+    "tray",
     "hyprland/language",
-    "tray"
+    "pulseaudio",
+    "clock"
   ],
 
-  "custom/logo": {
-    "format": " ",
-    "tooltip": false,
-    "on-click": "sh $HOME/.config/rofi/bin/powermenu"
-  },
-
   "hyprland/workspaces": {
-    "format": "{name}",
+    "format": "{icon}",
     "on-click": "activate",
-    "sort-by-number": true
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "active": "",
+      "default": "",
+    },
+    "sort-by-number": true,
   },
   
   "clock": {
-    "format": " {:%H:%M}",
-    "tooltip": true,
-    "tooltip-format": "󰃮 {:%a %d.%Om.%Y}"
+    "format": "{:%H:%M}",
   },
 
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": " muted",
+    "format": "{icon}",
+    "format-muted": " ",
     "tooltip": false,
     "format-icons": {
-      "headphone": "",
-      "default": ["", "", "󰕾", "󰕾", "󰕾", "", "", ""]
+      "default": [" ", " ", "󰕾 ", "󰕾 ", "󰕾 ", " ", " ", " "]
     },
     "scroll-step": 5,
     "on-click": "amixer set Master toggle",
@@ -70,8 +72,8 @@
 
   "hyprland/language": {
     "format": "{}",
-    "format-en": " en",
-    "format-cs": " cs",
+    "format-en": "en",
+    "format-cs": "cs",
   },
 
   "tray": {

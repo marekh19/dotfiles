@@ -1,10 +1,9 @@
-@define-color bg #1e1e2e;
-@define-color fg #b4befe;
-@define-color red #f38ba8;
+@define-color fg #c0caf5;
 
 * {
-  font-family: "JetBrainsMono NF Medium";
+  font-family: "Inter";
   font-size: 16px;
+  font-weight: 600;
   margin: 0;
   padding: 0;
 }
@@ -14,7 +13,6 @@ window#waybar {
 }
 
 tooltip {
-  background: @bg;
   color: @fg;
 }
 
@@ -28,22 +26,12 @@ tooltip {
 #language,
 #tray {
   color: @fg;
-  background: @bg;
-  border-radius: 8px;
-  padding: 4px 10px;
+}
+
+#workspaces {
+  margin-left: -6px;
 }
 
 #workspaces button {
-  color: @fg;
-  padding: 0 4px;
-}
-
-#workspaces button.active {
-  background: @fg;
-  color: @bg;
-}
-
-#pulseaudio.muted,
-#network.disconnected {
-  color: @red;
+  padding: 0 6px;
 }

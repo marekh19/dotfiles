@@ -16,4 +16,8 @@ alias lg lazygit
 
 # Utils
 alias vim nvim
-alias ssh 'TERM=xterm-color ssh'
+
+# Functions
+function sshr
+    TERM=xterm-color ssh $argv
+end

@@ -3,6 +3,7 @@ if status is-interactive
 end
 
 source $HOME/.config/fish/aliases.fish
+source $HOME/.config/fish/tokyo_night.fish
 
 set -g fish_greeting
 
