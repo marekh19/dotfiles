@@ -4,7 +4,7 @@ return {
     -- make the window smaller
     opts = {
       window = {
-        width = 26,
+        width = 30,
       },
       filesystem = {
         filtered_items = {
