@@ -4,6 +4,7 @@ end
 
 source $HOME/.config/fish/aliases.fish
 source $HOME/.config/fish/tokyo_night.fish
+source $HOME/.config/fish/pfetch.fish
 
 set -g fish_greeting
 
@@ -12,4 +13,4 @@ contains "$N_PREFIX/bin" $PATH; or set -a PATH "$N_PREFIX/bin" # Added by n-inst
 
 starship init fish | source
 
-neofetch
+pfetch
