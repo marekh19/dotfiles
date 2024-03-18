@@ -1,10 +1,11 @@
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
-    -- make the window smaller
     opts = {
+      -- make the window smaller
       window = {
         width = 30,
+        position = "right",
       },
       filesystem = {
         filtered_items = {
