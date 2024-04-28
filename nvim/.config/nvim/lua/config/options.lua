@@ -2,6 +2,6 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
-local opt = vim.opt -- set local variable
-
-opt.clipboard = "unnamedplus" -- use system clipboard
+local opt = vim.opt
+-- take "-" as a part of word
+opt.iskeyword:append("-")

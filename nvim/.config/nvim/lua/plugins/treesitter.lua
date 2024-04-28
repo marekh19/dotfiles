@@ -4,14 +4,7 @@ return {
     opts = {
       ensure_installed = {
         "prisma",
-      },
-    },
-  },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        prismals = {},
+        "graphql",
       },
     },
   },
