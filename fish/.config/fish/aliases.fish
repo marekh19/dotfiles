@@ -13,9 +13,11 @@ alias gs 'git status'
 alias gp 'git push'
 alias gfp 'git fetch --all && git pull'
 alias lg lazygit
+alias kirimase 'pnpm dlx kirimase@latest'
 
 # Utils
 alias vim nvim
+alias v nvim
 
 # Functions
 function sshr

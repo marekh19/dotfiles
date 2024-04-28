@@ -2,8 +2,9 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+fish_config theme choose "Catppuccin Mocha"
+
 source $HOME/.config/fish/aliases.fish
-source $HOME/.config/fish/tokyo_night.fish
 source $HOME/.config/fish/pfetch.fish
 
 set -g fish_greeting
