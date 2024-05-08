@@ -6,10 +6,31 @@ import = [
 TERM = "xterm-256color"
 
 [font]
-size = 15
+size = 17
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "ZedMono Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "ZedMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "ZedMono Nerd Font"
+style = "Italic"
+
+[font.bold_italic]
+family = "ZedMono Nerd Font"
+style = "Bold Italic"
+
+[font.offset]
+x = 0
+y = 1
+
+[font.glyph_offset]
+x = 0
+y = 1
 
 [window.padding]
 x = 8

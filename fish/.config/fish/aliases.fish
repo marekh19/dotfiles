@@ -13,11 +13,17 @@ alias gs 'git status'
 alias gp 'git push'
 alias gfp 'git fetch --all && git pull'
 alias lg lazygit
-alias kirimase 'pnpm dlx kirimase@latest'
+
+# Tmux
+alias tm 'tmux attach || tmux new-session' # Attach to a tmux session or create a new one
+alias tmks 'tmux kill-server' # Kill tmux server
+alias tmls 'tmux ls' # List all tmux sessions
+alias tmns 'tmux new-session -s' # Create a new tmux session with name
 
 # Utils
 alias vim nvim
 alias v nvim
+alias kirimase 'pnpm dlx kirimase@latest'
 
 # Functions
 function sshr
