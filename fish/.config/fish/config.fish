@@ -12,10 +12,11 @@ set -g fish_greeting
 set -x N_PREFIX "$HOME/n"
 contains "$N_PREFIX/bin" $PATH; or set -a PATH "$N_PREFIX/bin" # Added by n-install (see http://git.io/n-install-repo).
 
-starship init fish | source
-
-pfetch
-
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+starship init fish | source
+zoxide init fish | source
+
+pfetch
