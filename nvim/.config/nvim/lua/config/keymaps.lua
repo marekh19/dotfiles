@@ -16,3 +16,6 @@ map("n", "-", "<C-x>", { desc = "Increment number" })
 
 -- restart lsp
 map("n", "<leader>rs", "<Cmd>LspRestart<CR>", { desc = "Restart Lsp" })
+
+-- select all
+map("n", "<C-a>", "ggVG", { desc = "Select all" })
