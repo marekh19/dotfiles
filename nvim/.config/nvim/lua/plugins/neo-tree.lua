@@ -4,7 +4,7 @@ return {
     opts = {
       -- make the window smaller
       window = {
-        width = 30,
+        width = 36,
         position = "right",
       },
       filesystem = {
