@@ -1,6 +1,3 @@
-# setting 256 colors
-export TERM=xterm-256color
-
 # Set the directory to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
