@@ -27,3 +27,5 @@ yabai -m mouse_drop_action swap
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 
+# Janky borders
+borders active_color=0xffb4befe inactive_color=0xff6c7086 width=5.0 &
