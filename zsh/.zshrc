@@ -19,6 +19,10 @@ source ~/.zsh_aliases
 # Add go programs to path
 export PATH=$PATH:$(go env GOPATH)/bin
 
+# Load completions
+autoload -Uz compinit
+compinit
+
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
@@ -26,9 +30,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 zinit ice atload"zpcdreplay" atclone"./zplug.zsh" atpull"%atclone"
 zinit light g-plane/pnpm-shell-completion
-
-# Load completions
-autoload -U compinit && compinit
 
 zinit cdreplay -q
 
