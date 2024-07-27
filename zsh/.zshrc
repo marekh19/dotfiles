@@ -16,11 +16,16 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Source aliases
 source ~/.zsh_aliases
 
+# Add go programs to path
+export PATH=$PATH:$(go env GOPATH)/bin
+
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+zinit ice atload"zpcdreplay" atclone"./zplug.zsh" atpull"%atclone"
+zinit light g-plane/pnpm-shell-completion
 
 # Load completions
 autoload -U compinit && compinit
