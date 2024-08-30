@@ -71,3 +71,4 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Show pfetch
 pfetch
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"

@@ -14,6 +14,7 @@ alias gs='git status'
 alias gp='git push'
 alias gfp='git fetch --all && git pull'
 alias lg='lazygit'
+alias gcm="git checkout main"
 
 # Tmux
 alias tm='tmux attach || tmux new-session' # Attach to a tmux session or create a new one
