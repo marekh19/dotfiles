@@ -16,6 +16,9 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Source aliases
 source ~/.zsh_aliases
 
+# Source fzf theme
+source ~/.config/fzf/themes/tokyonight-moon.sh
+
 # Add go programs to path
 export PATH=$PATH:$(go env GOPATH)/bin
 
