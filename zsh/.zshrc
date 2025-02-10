@@ -74,6 +74,8 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Show pfetch
 pfetch
+
+# postgresql
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 # pnpm
@@ -82,4 +84,3 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
