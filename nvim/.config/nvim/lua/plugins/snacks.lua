@@ -13,6 +13,9 @@ return {
             },
           },
         },
+        files = {
+          hidden = true,
+        },
       },
     },
   },
