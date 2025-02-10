@@ -66,8 +66,10 @@ source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 # Shell integrations
 eval "$(fzf --zsh)"
 
-# Load Starship prompt
-eval "$(starship init zsh)"
+# Load Oh My Posh if not Apple Terminal
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
+fi
 
 # Load zoxide
 eval "$(zoxide init --cmd cd zsh)"
