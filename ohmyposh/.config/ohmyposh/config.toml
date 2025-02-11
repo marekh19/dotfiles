@@ -22,6 +22,10 @@ type = 'git'
 style = 'plain'
 foreground = 'magenta'
 background = 'transparent'
+# template = ' {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}'
+
+[blocks.segments.properties]
+fetch_status = true
 
 [[blocks]]
 type = 'prompt'
