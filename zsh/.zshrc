@@ -4,6 +4,15 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 # Add homebrew apps to path
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# Add local bin to path
+export PATH="$HOME/.local/bin:$PATH"
+
+# Add go programs to path
+export PATH=$PATH:$(go env GOPATH)/bin
+
+# postgresql
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
 # Download zinit if it's not already installed
 if [ ! -d "$ZINIT_HOME" ]; then
   mkdir -p "$(dirname $ZINIT_HOME)"
@@ -19,8 +28,6 @@ source ~/.zsh_aliases
 # Source fzf theme
 source ~/.config/fzf/themes/catppuccin-mocha.sh
 
-# Add go programs to path
-export PATH=$PATH:$(go env GOPATH)/bin
 
 # Load completions
 autoload -Uz compinit
@@ -77,8 +84,6 @@ eval "$(zoxide init --cmd cd zsh)"
 # Show pfetch
 pfetch
 
-# postgresql
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/marekhonzal/Library/pnpm"
@@ -86,3 +91,4 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+
