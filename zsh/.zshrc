@@ -28,7 +28,6 @@ source ~/.zsh_aliases
 # Source fzf theme
 source ~/.config/fzf/themes/catppuccin-mocha.sh
 
-
 # Load completions
 autoload -Uz compinit
 compinit
@@ -73,17 +72,14 @@ source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 # Shell integrations
 eval "$(fzf --zsh)"
 
-# Load Oh My Posh if not Apple Terminal
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
-fi
+# Load Starship
+eval "$(starship init zsh)"
 
 # Load zoxide
 eval "$(zoxide init --cmd cd zsh)"
 
 # Show pfetch
 pfetch
-
 
 # pnpm
 export PNPM_HOME="/Users/marekhonzal/Library/pnpm"
