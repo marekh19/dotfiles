@@ -15,7 +15,6 @@ error_symbol = '[󰯆](bold red)'
 style = "bold mauve"
 
 [directory]
-truncation_length = 4
 style = "bold lavender"
 
 [palettes.catppuccin_mocha]
