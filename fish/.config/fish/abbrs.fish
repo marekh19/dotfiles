@@ -49,6 +49,7 @@ abbr --add puil 'pnpm update --interactive --latest'
 abbr --add pd 'pnpm run dev'
 abbr --add pb 'pnpm run build'
 abbr --add pt 'pnpm run test'
+abbr --add pch 'pnpm run changeset'
 
 # Cursor agent
 abbr --add ca cursor-agent
