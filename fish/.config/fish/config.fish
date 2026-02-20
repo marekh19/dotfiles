@@ -9,3 +9,6 @@ end
 
 # Set color scheme
 fish_config theme choose "Catppuccin Mocha"
+
+# opencode
+fish_add_path /Users/marekhonzal/.opencode/bin
