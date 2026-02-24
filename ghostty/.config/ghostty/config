@@ -1,0 +1,23 @@
+# Colorscheme
+theme = catppuccin-mocha
+
+# Fonts
+font-size = 15
+
+# Main font family
+font-family = "JetBrains Mono"
+font-style = Medium
+font-style-bold = Extrabold
+font-style-italic = "Medium Italic"
+font-style-bold-italic = "Extrabold Italic"
+
+# Fallback font for icons
+font-family = "Symbols Nerd Font Mono"
+
+# Window
+macos-titlebar-style = hidden
+
+window-padding-x = 4
+window-padding-y = 2
+
+shell-integration = fish
