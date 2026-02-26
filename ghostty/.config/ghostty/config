@@ -1,11 +1,11 @@
 # Colorscheme
-theme = Catppuccin Mocha
+theme = dark:/Users/marekhonzal/zenbones.nvim/extras/ghostty/tokyobones_dark,light:/Users/marekhonzal/zenbones.nvim/extras/ghostty/tokyobones_light
 
 # Fonts
 font-size = 15
 
 # Main font family
-font-family = JetBrains Mono
+font-family = Maple Mono
 
 font-style = Medium
 font-style-bold = ExtraBold
