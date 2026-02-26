@@ -5,10 +5,5 @@ source ~/.config/fish/path.fish
 if status is-interactive
     source ~/.config/fish/abbrs.fish
     source ~/.config/fish/tools.fish
+    source ~/.config/fish/variables.fish
 end
-
-# Set color scheme
-fish_config theme choose "Catppuccin Mocha"
-
-# opencode
-fish_add_path /Users/marekhonzal/.opencode/bin
