@@ -10,7 +10,7 @@ end
 
 # zoxide (smart cd)
 if command -q zoxide
-    zoxide init fish --cmd cd | source
+    zoxide init fish --cmd z | source
 end
 
 # fzf keybindings & completion
