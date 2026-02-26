@@ -1,6 +1,6 @@
 # dotfiles
 
-![screenshot](_assets/screenshot.png)
+![Terminal setup with Neovim, tmux, and Ghostty](_assets/screenshot.png)
 
 My personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
