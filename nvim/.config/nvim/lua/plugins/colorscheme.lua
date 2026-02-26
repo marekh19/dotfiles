@@ -1,14 +1,9 @@
 return {
-  "catppuccin/nvim",
-  name = "catppuccin",
+  "zenbones-theme/zenbones.nvim",
+  dependencies = "rktjmp/lush.nvim",
   priority = 1000,
   lazy = false,
-  opts = {
-    flavour = "mocha",
-    no_underline = true,
-  },
-  config = function(_, opts)
-    require("catppuccin").setup(opts)
-    vim.cmd([[colorscheme catppuccin]])
+  config = function()
+    vim.cmd([[colorscheme tokyobones]])
   end,
 }
