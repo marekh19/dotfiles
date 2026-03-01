@@ -40,12 +40,14 @@ abbr --add vim nvim
 
 # Pnpm
 abbr --add p pnpm
+abbr --add pr 'pnpm run'
 abbr --add pi 'pnpm install'
 abbr --add pa 'pnpm add'
 abbr --add pad 'pnpm add -D'
 abbr --add pu 'pnpm update'
 abbr --add pui 'pnpm update --interactive'
 abbr --add puil 'pnpm update --interactive --latest'
+abbr --add puilr 'pnpm update --interactive --latest --recursive'
 abbr --add pd 'pnpm run dev'
 abbr --add pb 'pnpm run build'
 abbr --add pt 'pnpm run test'
