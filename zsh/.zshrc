@@ -76,7 +76,7 @@ eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
 
 # Load zoxide
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init --cmd z zsh)"
 
 # Show pfetch
 pfetch
