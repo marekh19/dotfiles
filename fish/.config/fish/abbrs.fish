@@ -26,7 +26,7 @@ abbr --add gl 'git log'
 abbr --add tm 'tmux attach || tmux new session'
 abbr --add tmks 'tmux kill-server'
 abbr --add tmls 'tmux ls'
-abbr --add tmns 'tmux new-session -s'
+abbr --add tmns tmux-session # custom script in ~/.config/fish/functions/tmux-session.fish
 
 # Brew
 abbr --add bi 'brew install'
