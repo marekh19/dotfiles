@@ -68,7 +68,5 @@ abbr --add abbr 'bat ~/.config/fish/abbrs.fish'
 ## Fish
 abbr --add f fish
 
-## Fisher
-abbr --add fr fisher
-abbr --add fri 'fisher install'
-abbr --add frl 'fisher list'
+# Other apps
+abbr --add ts tailscale
