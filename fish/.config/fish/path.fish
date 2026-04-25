@@ -20,7 +20,8 @@ end
 fish_add_path /opt/homebrew/opt/postgresql@15/bin
 
 # Bun
-fish_add_path $HOME/.bun/bin
+set -gx BUN_INSTALL "$HOME/.bun"
+fish_add_path $BUN_INSTALL/bin
 
 # opencode
 fish_add_path $HOME/.opencode/bin
