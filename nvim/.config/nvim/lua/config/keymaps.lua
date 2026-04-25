@@ -18,3 +18,10 @@ map("n", "-", "<C-x>", { desc = "Increment number" })
 
 -- restart lsp
 map("n", "<leader>rs", "<Cmd>LspRestart<CR>", { desc = "Restart Lsp" })
+
+-- eslint fix all
+map("n", "<leader>cL", function()
+  if vim.fn.exists(":LspEslintFixAll") > 0 then
+    vim.cmd("LspEslintFixAll")
+  end
+end, { desc = "ESLint Fix All" })
