@@ -2,15 +2,16 @@
 #   1. shell  – 4 panes in a tiled 2×2 layout
 #   2. nvim   – neovim ready to go
 #   3. claude – claude CLI
-# Usage: tmux-session <session-name>
+# Usage: tmux-session [session-name]
+#   session-name defaults to the current directory's basename
 
 function tmux-session
+    # Fall back to current folder name when no argument given
     if test (count $argv) -eq 0
-        echo "Usage: tmux-session <session-name>"
-        return 1
+        set session (basename (pwd))
+    else
+        set session $argv[1]
     end
-
-    set session $argv[1]
 
     # Bail if session already exists
     if tmux has-session -t $session 2>/dev/null
