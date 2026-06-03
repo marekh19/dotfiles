@@ -16,6 +16,7 @@ end
 # fzf keybindings & completion
 if command -q fzf
     fzf --fish | source
+    set -gx FZF_DEFAULT_OPTS_FILE ~/.config/fzf/fzf.conf
 end
 
 # System info on shell start

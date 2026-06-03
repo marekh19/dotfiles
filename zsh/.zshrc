@@ -25,8 +25,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Source aliases
 source ~/.zsh_aliases
 
-# Source fzf theme
-source ~/.config/fzf/themes/catppuccin-mocha.sh
+export FZF_DEFAULT_OPTS_FILE=~/.config/fzf/fzf.conf
 
 # Load completions
 autoload -Uz compinit

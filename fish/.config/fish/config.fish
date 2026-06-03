@@ -6,4 +6,5 @@ if status is-interactive
     source ~/.config/fish/abbrs.fish
     source ~/.config/fish/tools.fish
     source ~/.config/fish/variables.fish
+    source ~/.config/fish/theme.fish
 end

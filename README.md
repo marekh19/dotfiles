@@ -1,6 +1,6 @@
 # dotfiles
 
-![Terminal setup with Neovim, tmux, and Ghostty](_assets/screenshot.png)
+![Terminal setup with Neovim, tmux, and Ghostty](./.github/images/showcase.png)
 
 My personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
@@ -11,8 +11,8 @@ My personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 - **Multiplexer:** [tmux](https://github.com/tmux/tmux)
 - **Editor:** [Neovim](https://neovim.io/) (LazyVim)
 - **WM:** [AeroSpace](https://github.com/nikitabobko/AeroSpace) (macOS) / [Hyprland](https://hyprland.org/) (Linux)
-- **Theme:** [zenbones](https://github.com/zenbones-theme/zenbones.nvim) tokyobones
-- **Font:** Maple Mono / JetBrains Mono
+- **Theme:** [meowsoot](https://github.com/marekh19/meowsoot.nvim) - my own creation
+- **Font:** JetBrains Mono
 
 ## Tools
 
@@ -20,9 +20,7 @@ My personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 [btop](https://github.com/aristocratos/btop) ·
 [fzf](https://github.com/junegunn/fzf) ·
 [lazygit](https://github.com/jesseduffield/lazygit) ·
-[rofi](https://github.com/davatorium/rofi) ·
-[dunst](https://github.com/dunst-project/dunst) ·
-[waybar](https://github.com/Alexays/Waybar)
+[lazydocker](https://github.com/jesseduffield/lazydocker)
 
 ## Usage
 
