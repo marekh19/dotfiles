@@ -11,6 +11,14 @@ return {
             less = { lint = { unknownAtRules = "ignore" } },
           },
         },
+        templ = {
+          filetypes = { "templ" },
+          settings = {
+            templ = {
+              enable_snippets = true,
+            },
+          },
+        },
       },
     },
   },
