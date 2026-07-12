@@ -1,0 +1,68 @@
+# herdr — managed in dotfiles, stow package "herdr" -> ~/.config/herdr/config.toml
+# Migrated from tmux (origin: tmux/.config/tmux/tmux.conf).
+# Requires plugin:  herdr plugin install paulbkim-dev/vim-herdr-navigation
+
+onboarding = false
+
+[theme]
+name = "rose-pine" # TODO: swap for a meowsoot custom theme
+
+[keys]
+prefix           = "ctrl+a"           # tmux: set -g prefix C-a
+
+# Tabs (== tmux windows). new_tab (prefix+c), next/previous_tab (prefix+n / p),
+# switch_tab (prefix+1..9) and reload_config (prefix+shift+r) already match the
+# tmux setup, so they stay on herdr defaults.
+detach           = "prefix+d"         # tmux default: prefix d   (herdr default: q)
+close_tab        = "prefix+ampersand" # tmux: bind & kill-window
+workspace_picker = "prefix+s"         # tmux: bind s (tmux-fzf session switch)
+settings         = "prefix+comma"     # moved off s; also in the global menu
+
+# Panes
+split_vertical   = "prefix+\\"        # left|right  — tmux: bind | split-window -h
+split_horizontal = "prefix+minus"     # top|bottom  — tmux: bind - split-window -v
+zoom             = "prefix+m"         # tmux: bind m resize-pane -Z  (herdr default: z)
+# close_pane stays default prefix+x   == tmux: bind x kill-pane
+# focus_pane_* stay default prefix+h/j/k/l (used to step out of passthrough TUIs);
+#   direct C-h/j/k/l is handled by vim-herdr-navigation below.
+# resize intentionally left unbound — done with the mouse.
+
+# vim-herdr-navigation: seamless C-h/j/k/l across nvim splits and herdr panes
+# (the herdr half of christoomey/vim-tmux-navigator). Direct chords, no prefix.
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+description = "navigate left (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+description = "navigate down (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+description = "navigate up (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"
+description = "navigate right (vim/herdr)"
+
+# Clear screen. Plain C-l is taken by nav above (same tradeoff as tmux), so send
+# it with the prefix. tmux: bind C-l send-keys 'C-l'
+[[keys.command]]
+key = "prefix+ctrl+l"
+type = "shell"
+command = "sh -c 'herdr pane send-keys \"$HERDR_ACTIVE_PANE_ID\" ctrl+l'"
+description = "clear screen"
+
+[ui.sound]
+enabled = true
+
+[ui]
+show_agent_labels_on_pane_borders = false
