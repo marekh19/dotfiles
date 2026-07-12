@@ -8,7 +8,7 @@ My personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 
 - **Shell:** [Fish](https://fishshell.com/) + [Starship](https://starship.rs/) prompt
 - **Terminal:** [Ghostty](https://ghostty.org/)
-- **Multiplexer:** [tmux](https://github.com/tmux/tmux)
+- **Multiplexer:** [herdr](https://herdr.dev/)
 - **Editor:** [Neovim](https://neovim.io/) (LazyVim)
 - **WM:** [AeroSpace](https://github.com/nikitabobko/AeroSpace) (macOS) / [Hyprland](https://hyprland.org/) (Linux)
 - **Theme:** [meowsoot](https://github.com/marekh19/meowsoot.nvim) - my own creation
@@ -28,5 +28,8 @@ Clone into your home directory and symlink any config with `stow`:
 
 ```sh
 cd ~/dotfiles
-stow fish ghostty tmux nvim starship  # …or any other package
+stow fish ghostty herdr nvim starship  # …or any other package
+
+# herdr: install the Neovim navigation plugin
+herdr plugin install paulbkim-dev/vim-herdr-navigation
 ```

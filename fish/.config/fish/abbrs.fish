@@ -29,6 +29,12 @@ abbr --add tmks 'tmux kill-server'
 abbr --add tmls 'tmux ls'
 abbr --add tmns tmux-session # custom script in ~/.config/fish/functions/tmux-session.fish
 
+# Herdr
+abbr --add hd herdr                     # launch / attach persistent session
+abbr --add hdls 'herdr session list'    # list sessions
+abbr --add hdks 'herdr server stop'     # stop server (kills all sessions)
+abbr --add hdu 'herdr update'
+
 # Brew
 abbr --add bi 'brew install'
 abbr --add bls 'brew list'
