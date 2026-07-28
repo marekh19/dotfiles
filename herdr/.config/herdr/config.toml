@@ -4,24 +4,21 @@
 
 onboarding = false
 
-[theme]
-name = "rose-pine" # TODO: swap for a meowsoot custom theme
-
 [keys]
-prefix           = "ctrl+a"           # tmux: set -g prefix C-a
+prefix = "ctrl+a" # tmux: set -g prefix C-a
 
 # Tabs (== tmux windows). new_tab (prefix+c), next/previous_tab (prefix+n / p),
 # switch_tab (prefix+1..9) and reload_config (prefix+shift+r) already match the
 # tmux setup, so they stay on herdr defaults.
-detach           = "prefix+d"         # tmux default: prefix d   (herdr default: q)
-close_tab        = "prefix+ampersand" # tmux: bind & kill-window
-workspace_picker = "prefix+s"         # tmux: bind s (tmux-fzf session switch)
-settings         = "prefix+comma"     # moved off s; also in the global menu
+detach = "prefix+d"            # tmux default: prefix d   (herdr default: q)
+close_tab = "prefix+ampersand" # tmux: bind & kill-window
+workspace_picker = "prefix+s"  # tmux: bind s (tmux-fzf session switch)
+settings = "prefix+comma"      # moved off s; also in the global menu
 
 # Panes
-split_vertical   = "prefix+\\"        # left|right  — tmux: bind | split-window -h
-split_horizontal = "prefix+minus"     # top|bottom  — tmux: bind - split-window -v
-zoom             = "prefix+m"         # tmux: bind m resize-pane -Z  (herdr default: z)
+split_vertical = "prefix+\\"      # left|right  — tmux: bind | split-window -h
+split_horizontal = "prefix+minus" # top|bottom  — tmux: bind - split-window -v
+zoom = "prefix+m"                 # tmux: bind m resize-pane -Z  (herdr default: z)
 # close_pane stays default prefix+x   == tmux: bind x kill-pane
 # focus_pane_* stay default prefix+h/j/k/l (used to step out of passthrough TUIs);
 #   direct C-h/j/k/l is handled by vim-herdr-navigation below.
@@ -66,3 +63,9 @@ enabled = true
 
 [ui]
 show_agent_labels_on_pane_borders = false
+# toggle_sidebar (prefix+b) hides the sidebar completely rather than shrinking to a rail
+sidebar_collapsed_mode = "hidden"
+
+[theme]
+name = "terminal"
+auto_switch = false
