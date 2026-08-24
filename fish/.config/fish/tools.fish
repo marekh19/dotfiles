@@ -17,6 +17,7 @@ end
 if command -q fzf
     fzf --fish | source
     set -gx FZF_DEFAULT_OPTS_FILE ~/.config/fzf/fzf.conf
+    set -gx FZF_CTRL_R_OPTS --ansi
 end
 
 # System info on shell start
