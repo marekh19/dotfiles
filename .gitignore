@@ -10,3 +10,11 @@ nvim/.config/nvim/lazy-lock.json
 # lazygit
 **/lazygit/state.yml
 **/lazygit/github_pull_requests.json
+
+# herdr runtime/cache state (config.toml stays tracked)
+herdr/.config/herdr/*.log
+herdr/.config/herdr/session.json
+herdr/.config/herdr/release-notes.json
+herdr/.config/herdr/plugins.json
+herdr/.config/herdr/.plugins.lock
+herdr/.config/herdr/plugins/
