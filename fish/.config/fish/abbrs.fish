@@ -1,13 +1,23 @@
 # ls -> eza
 function ls
-    command eza --color=always --icons=always $argv
+    if command -q eza
+        command eza --color=always --icons=always $argv
+    else if command ls --color=auto -d . >/dev/null 2>&1
+        command ls --color=auto $argv
+    else if command ls -G -d . >/dev/null 2>&1
+        command ls -G $argv
+    else
+        command ls $argv
+    end
 end
 
 # ls
 abbr --add ll 'ls -l'
 abbr --add la 'ls -a'
 abbr --add lla 'ls -la'
-abbr --add lt 'ls -a --tree --ignore-glob .git --ignore-glob node_modules --ignore-glob .next'
+if command -q eza
+    abbr --add lt 'ls -a --tree --ignore-glob .git --ignore-glob node_modules --ignore-glob .next'
+end
 
 # Git
 abbr --add g git

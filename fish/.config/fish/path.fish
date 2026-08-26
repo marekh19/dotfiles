@@ -1,10 +1,24 @@
 # Environment and PATH setup
 
-# Homebrew – sets PATH, MANPATH, etc.
-eval (/opt/homebrew/bin/brew shellenv)
+# Homebrew – sets PATH, MANPATH, etc. when installed.
+if test -x /opt/homebrew/bin/brew
+    eval (/opt/homebrew/bin/brew shellenv)
+else if test -x /home/linuxbrew/.linuxbrew/bin/brew
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+else if command -q brew
+    eval (brew shellenv)
+end
 
 # PNPM
-set -gx PNPM_HOME "$HOME/Library/pnpm"
+if not set -q PNPM_HOME
+    if set -q XDG_DATA_HOME
+        set -gx PNPM_HOME "$XDG_DATA_HOME/pnpm"
+    else if test (uname) = Darwin
+        set -gx PNPM_HOME "$HOME/Library/pnpm"
+    else
+        set -gx PNPM_HOME "$HOME/.local/share/pnpm"
+    end
+end
 fish_add_path $PNPM_HOME
 
 # Local bin
@@ -15,9 +29,6 @@ if command -q go
     set -l gopath (go env GOPATH)
     fish_add_path $gopath/bin
 end
-
-# PostgreSQL
-fish_add_path /opt/homebrew/opt/postgresql@15/bin
 
 # Bun
 set -gx BUN_INSTALL "$HOME/.bun"
