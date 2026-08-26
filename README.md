@@ -10,14 +10,13 @@ My personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 - **Terminal:** [Ghostty](https://ghostty.org/)
 - **Multiplexer:** [herdr](https://herdr.dev/)
 - **Editor:** [Neovim](https://neovim.io/) (LazyVim)
-- **WM:** [AeroSpace](https://github.com/nikitabobko/AeroSpace) (macOS) / [Hyprland](https://hyprland.org/) (Linux)
+- **WM:** [AeroSpace](https://github.com/nikitabobko/AeroSpace)
 - **Theme:** [meowsoot](https://github.com/marekh19/meowsoot.nvim) - my own creation
 - **Font:** JetBrains Mono
 
 ## Tools
 
 [bat](https://github.com/sharkdp/bat) ·
-[btop](https://github.com/aristocratos/btop) ·
 [fzf](https://github.com/junegunn/fzf) ·
 [lazygit](https://github.com/jesseduffield/lazygit) ·
 [lazydocker](https://github.com/jesseduffield/lazydocker)

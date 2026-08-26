@@ -4,13 +4,6 @@
 # Nvim
 nvim/.config/nvim/lazy-lock.json
 
-# Zsh
-zsh/.config/zsh/.zcompdump
-zsh/.config/zsh/.zsh_history
-
-# tmux
-tmux/.config/tmux/plugins/*
-
 # lazygit
 **/lazygit/state.yml
 **/lazygit/github_pull_requests.json

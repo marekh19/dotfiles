@@ -23,12 +23,6 @@ abbr --add gf 'git fetch --prune'
 abbr --add gfa 'git fetch --prune --all'
 abbr --add gl 'git log'
 
-# Tmux
-abbr --add tm 'tmux attach || tmux new session'
-abbr --add tmks 'tmux kill-server'
-abbr --add tmls 'tmux ls'
-abbr --add tmns tmux-session # custom script in ~/.config/fish/functions/tmux-session.fish
-
 # Herdr
 abbr --add hd herdr                     # launch / attach persistent session
 abbr --add hdls 'herdr session list'    # list sessions
