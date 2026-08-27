@@ -16,7 +16,7 @@ abbr --add ll 'ls -l'
 abbr --add la 'ls -a'
 abbr --add lla 'ls -la'
 if command -q eza
-    abbr --add lt 'ls -a --tree --ignore-glob .git --ignore-glob node_modules --ignore-glob .next'
+    abbr --add lt 'ls -a --tree --ignore-glob ".git|node_modules|.next"'
 end
 
 # Git
