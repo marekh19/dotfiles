@@ -12,6 +12,8 @@ map("i", "jk", "<ESC>:w<CR>", { desc = "Exit insert mode and save" })
 -- don't copy deleted char to the clipboard
 map("n", "x", '"_x')
 
+map({ "n", "x" }, "y", '"+y', { desc = "Yank to clipboard" })
+
 -- indcrement and decrement numbers
 map("n", "+", "<C-a>", { desc = "Increment number" })
 map("n", "-", "<C-x>", { desc = "Increment number" })
