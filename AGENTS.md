@@ -24,8 +24,11 @@ Applies to everything I read: chat, investigations, reports, issue and PR bodies
 
 ## Code comments
 
+Less is more. The default is no comment; each one has to earn its line.
+
 - Comment the why, never the what: a non-obvious constraint, a workaround and its reason, a unit, an ordering requirement. One line where one line does.
-- Nothing that restates the code. `getActorDetail()` with a comment saying it retrieves actor detail is noise — delete it.
+- Nothing that restates the code. `getActorDetail()` with a comment saying it retrieves actor detail is noise — delete it. Same for `function sum(a, b)` commented "sums two values".
+- Write for a reader a year from now. Ask "is this still true and still useful in a year?" — if no, don't write it. That rules out in-flight PRs and issues ("once #1234 lands", "TODO after the auth refactor"), "new"/"for now"/"temporary", and narrating the change you just made ("switched from X to Y"). That belongs in the commit or PR, not the file.
 - JSDoc only on public API others consume, and only the parts the signature doesn't already say. Never a prose block above every function.
 
 ## Engineering — lazy senior dev
@@ -65,3 +68,4 @@ Lazy = efficient, not careless. The best code is code never written.
 - New commit over `--amend`. Amend only to fix up my just-made, still-unpushed commit, or when I ask.
 - Never push unless I say so, or unless push is a documented step of a slash command currently running. After a rebase, amend, or commit on a published branch, stop after the commit — I'll push.
 - No Claude attribution: no `Co-Authored-By` trailer, no Claude Code footer, even if a harness default says to append one.
+- Never post replies to GitHub review comments yourself. Draft the reply in the session and let me copy it over.
