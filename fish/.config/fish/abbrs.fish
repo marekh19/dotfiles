@@ -31,12 +31,13 @@ abbr --add gp 'git push'
 abbr --add gpf 'git push --force-with-lease'
 abbr --add gf 'git fetch --prune'
 abbr --add gfa 'git fetch --prune --all'
+abbr --add gpl 'git pull'
 abbr --add gl 'git log'
 
 # Herdr
-abbr --add hd herdr                     # launch / attach persistent session
-abbr --add hdls 'herdr session list'    # list sessions
-abbr --add hdks 'herdr server stop'     # stop server (kills all sessions)
+abbr --add hd herdr # launch / attach persistent session
+abbr --add hdls 'herdr session list' # list sessions
+abbr --add hdks 'herdr server stop' # stop server (kills all sessions)
 abbr --add hdu 'herdr update'
 
 # Brew
@@ -52,7 +53,7 @@ abbr --add vim nvim
 # Pnpm
 abbr --add p pnpm
 abbr --add pr 'pnpm run'
-abbr --add pi 'pnpm install'
+abbr --add pin 'pnpm install'
 abbr --add pa 'pnpm add'
 abbr --add pad 'pnpm add -D'
 abbr --add pu 'pnpm update'
