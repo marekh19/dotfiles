@@ -43,3 +43,10 @@ Applies to everything I read: chat, investigations, reports, issue and PR bodies
 - Never push unless I say so, or unless push is a documented step of a slash command currently running. After a rebase, amend, or commit on a published branch, stop after the commit — I'll push.
 - No Claude attribution in commits or PR bodies: no `Co-Authored-By` trailer or Claude Code footer.
 - Never post replies to GitHub review comments yourself. Draft the reply in the session and let me copy it over.
+
+## Tooling
+
+Available: `gh` (authenticated, SSH), `rg`, `fd`, `fzf`, `jq`, `bat`, `delta`, `yq`.
+
+- Node comes from `fnm`. Run it through the project's version, not a system binary.
+- Shell is fish. Use `bash -c` for bash-specific syntax.
