@@ -40,7 +40,7 @@ Applies to everything I read: chat, investigations, reports, issue and PR bodies
 
 - Routine commit: single-line Conventional Commits title, no body. Body only for a breaking change, a complex migration, or when I ask.
 - New commit over `--amend`. Amend only to fix up my just-made, still-unpushed commit, or when I ask.
-- Never push unless I say so, or unless push is a documented step of a slash command currently running. After a rebase, amend, or commit on a published branch, stop after the commit — I'll push.
+- Never push unless I say so, or unless push is a documented step of a slash command currently running. After a rebase, amend, or commit on a published branch, stop after the commit. I'll push.
 - No Claude attribution in commits or PR bodies: no `Co-Authored-By` trailer or Claude Code footer.
 - Never post replies to GitHub review comments yourself. Draft the reply in the session and let me copy it over.
 
