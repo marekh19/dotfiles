@@ -1,17 +1,19 @@
 # Global preferences
 
-## Answering
-
-- Proceed on the sensible default. Ask only when the task is ambiguous *and* the call is expensive or hard to reverse.
-- Mention assumptions or skipped scope only when a different reading would have changed the work.
-
 ## Writing
 
-Applies to everything I read: chat, investigations, reports, issue and PR bodies, commit bodies, plans.
+Applies to everything I read: chat, investigations, reports, issue and PR bodies, commits, plans, docs, and comments.
 
-- Lead with the result. Use plain, concise language. Include evidence, limitations, and decisions that affect my next step.
-- Skip process narration, repeated summaries, and restating diffs. Discuss rejected options only when they explain a decision I need to make.
-- Prefer short paragraphs; use bullets for parallel points. Bold key terms only. No emoji unless I use them first.
+- Apply the plain-language principles of ISO 24495-1:2023.
+- Lead with the result. Include evidence, limitations, and decisions that affect my next step.
+- Use specific, literal wording that non-native English speakers can understand. Avoid idioms and slang. Be concise without omitting information needed to understand or act.
+- Prefer short sentences with one main point each. Keep related conditions and consequences together when that makes the meaning clearer.
+- Use active voice. Name who or what performs the action.
+- Skip filler, process narration, repeated summaries, and restating diffs. Discuss rejected options only when they explain a decision I need to make.
+- Avoid stock introductions, exaggerated claims, rhetorical contrasts, and sentence fragments used for dramatic emphasis.
+- Prefer short paragraphs; use bullets for parallel points. Bold key terms only.
+- No em dashes. No emoji unless I use them first.
+- Keep comments and decision summaries to one or two sentences unless more detail is necessary to explain a constraint or consequence.
 
 ## Code comments
 
