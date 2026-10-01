@@ -4,6 +4,7 @@ return {
     opts = {
       explorer = { enabled = false },
       dashboard = { enabled = false },
+      lazygit = { configure = false },
       picker = {
         sources = {
           files = {
