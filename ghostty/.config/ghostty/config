@@ -21,3 +21,7 @@ shell-integration = fish
 
 # Cursor
 custom-shader = shaders/cursor_warp.glsl
+
+# Transparency
+background-opacity = 0.96
+background-blur = true
