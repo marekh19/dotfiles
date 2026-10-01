@@ -46,7 +46,7 @@ Applies to everything I read: chat, investigations, reports, issue and PR bodies
 
 ## Tooling
 
-Available: `gh` (authenticated, SSH), `rg`, `fd`, `fzf`, `jq`, `bat`, `delta`, `yq`.
+Available: `gh` (authenticated, SSH), `rg`, `fd`, `fzf`, `jq`, `bat`, `delta`, `yq`, `uv`, `duckdb`.
 
 - Node comes from `fnm`. Run it through the project's version, not a system binary.
 - Shell is fish. Use `bash -c` for bash-specific syntax.
