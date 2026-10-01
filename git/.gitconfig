@@ -12,6 +12,9 @@
 [commit]
   gpgsign = true
 
+[include]
+  path = ~/.config/git/meowsoot.gitconfig
+
 [core]
   pager = delta
 
@@ -20,7 +23,6 @@
 
 [delta]
   navigate = true  # use n and N to move between diff sections
-  dark = true
 
 [merge]
   conflictStyle = zdiff3
