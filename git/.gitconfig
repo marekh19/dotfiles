@@ -13,7 +13,8 @@
   gpgsign = true
 
 [include]
-  path = ~/.config/git/meowsoot.gitconfig
+  # Delta colors: written by fish/.config/fish/theme.fish
+  path = ~/.config/git/current-theme.gitconfig
 
 [core]
   pager = delta

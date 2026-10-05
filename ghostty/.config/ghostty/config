@@ -1,5 +1,5 @@
-# Colorscheme
-theme = meowsoot
+# Colorscheme: written by fish/.config/fish/theme.fish
+config-file = ?current-theme
 
 # Fonts
 font-size = 14

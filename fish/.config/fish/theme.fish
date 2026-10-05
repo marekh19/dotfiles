@@ -1,50 +1,43 @@
-# meowsoot — Fish shell theme.
-# https://github.com/marekh19/meowsoot.nvim
-# Auto-generated from lua/meowsoot/palette.lua. Do not edit by hand.
-# Install:  cp extras/fish/meowsoot.fish ~/.config/fish/conf.d/
+# Color theme. Switch with `theme <name>`; see "Theming" in the README.
+set -q dotfiles_theme; or set -U dotfiles_theme meowsoot
 
-# Palette
-set -l foreground e2e0df
-set -l selection  353331
-set -l comment    b1ada9
-set -l red        e99696
-set -l green      98cdaa
-set -l yellow     dfd286
-set -l peach      e3b096
-set -l cyan       96d8e3
-set -l cyan_br    c4e7ee
-set -l pink       eaa4c9
-set -l lavender   cca6e7
+# Writes a generated include file only when its content changes, and only when
+# the tool's config directory exists.
+function __theme_write --argument-names file
+    path is -d (path dirname $file); or return
+    set -l content (string join \n -- $argv[2..])
+    test "$content" = "$(cat $file 2>/dev/null | string collect)"; and return
+    printf '%s\n' $argv[2..] >$file
+end
 
-# Syntax Highlighting Colors
-set -g fish_color_normal         $foreground
-set -g fish_color_command        $cyan
-set -g fish_color_keyword        $lavender
-set -g fish_color_quote          $yellow
-set -g fish_color_redirection    $cyan
-set -g fish_color_end            $foreground
-set -g fish_color_error          $red
-set -g fish_color_param          $foreground
-set -g fish_color_option         $peach
-set -g fish_color_comment        $comment
-set -g fish_color_selection      --background=$selection
-set -g fish_color_operator       $cyan
-set -g fish_color_escape         $peach
-set -g fish_color_autosuggestion $comment
-set -g fish_color_cwd            $cyan
-set -g fish_color_cwd_root       $red
-set -g fish_color_valid_path     --underline
-set -g fish_color_history_current --bold
-set -g fish_color_search_match   --background=$selection
-set -g fish_color_match          $cyan_br
-set -g fish_color_cancel         $red
+# Runs again in every open shell when the universal variable changes.
+function __theme_apply --on-variable dotfiles_theme
+    set -l name $dotfiles_theme
 
-# Completion Pager Colors
-set -g fish_pager_color_progress             $comment
-set -g fish_pager_color_prefix               $cyan
-set -g fish_pager_color_completion           $foreground
-set -g fish_pager_color_description          $comment
-set -g fish_pager_color_selected_background  --background=$selection
-set -g fish_pager_color_selected_completion  $foreground
-set -g fish_pager_color_selected_description $comment
-set -g fish_pager_color_selected_prefix      $cyan
+    # No --color-theme: themes without [dark]/[light] sections fail with it.
+    fish_config theme choose $name
+
+    set -gx BAT_THEME $name
+    set -gx THEME_NVIM $name
+
+    # Only point at files that exist; fzf errors on a missing options file.
+    set -e FZF_DEFAULT_OPTS_FILE LG_CONFIG_FILE
+    set -l fzf ~/.config/fzf/themes/$name.conf
+    test -f $fzf; and set -gx FZF_DEFAULT_OPTS_FILE $fzf
+
+    set -l lazygit ~/.config/lazygit/themes/$name.yml
+    if test -f $lazygit
+        set -l lazygit_dir ~/.config/lazygit
+        test (uname) = Darwin; and set lazygit_dir ~/Library/Application\ Support/lazygit
+        # Theme first, so config.yml overrides non-color options in theme files.
+        set -gx LG_CONFIG_FILE "$lazygit,$lazygit_dir/config.yml"
+    end
+
+    # Ghostty and Git cannot read environment variables.
+    __theme_write ~/.config/ghostty/current-theme "theme = $name"
+    __theme_write ~/.config/git/current-theme.gitconfig \
+        '[include]' "  path = ~/.config/git/themes/$name.gitconfig" \
+        '[delta]' "  syntax-theme = $name"
+end
+
+__theme_apply

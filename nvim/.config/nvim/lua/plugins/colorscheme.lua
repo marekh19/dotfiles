@@ -6,9 +6,19 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      style = "night",
       transparent = true,
     },
   },
-  { "LazyVim/LazyVim", opts = { colorscheme = "meowsoot" } },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      -- THEME_NVIM is set by fish/.config/fish/theme.fish. Fall back to
+      -- meowsoot when that colorscheme is not installed.
+      colorscheme = function()
+        if not pcall(vim.cmd.colorscheme, vim.env.THEME_NVIM or "meowsoot") then
+          vim.cmd.colorscheme("meowsoot")
+        end
+      end,
+    },
+  },
 }
