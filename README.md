@@ -54,7 +54,7 @@ Brewfile and run `brew bundle install`. To remove one, delete its line and run
 
 | Command | What it does |
 |---|---|
-| `brew bundle install` | Installs missing packages and upgrades outdated ones |
+| `brew bundle install` | Installs missing packages and upgrades outdated ones. It doesn't upgrade their dependencies; `brew upgrade` does |
 | `brew bundle check` | Reports whether the machine matches the Brewfile |
 | `brew bundle cleanup` | Lists installed packages the Brewfile doesn't list, then asks before it uninstalls them |
 

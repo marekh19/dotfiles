@@ -41,10 +41,10 @@ abbr --add hdks 'herdr server stop' # stop server (kills all sessions)
 abbr --add hdu 'herdr update'
 
 # Brew
-abbr --add bi 'brew install'
-abbr --add bls 'brew list'
-abbr --add bu 'brew update'
-abbr --add bup 'brew upgrade'
+abbr --add bbi 'brew bundle install'
+abbr --add bbc 'brew bundle check'
+abbr --add bbcl 'brew bundle cleanup'
+abbr --add bup 'brew upgrade' # also upgrades dependencies, which brew bundle skips
 
 # Nvim
 abbr --add v nvim
