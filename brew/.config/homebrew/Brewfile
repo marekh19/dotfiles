@@ -54,6 +54,7 @@ if OS.mac?
   brew "librsvg"         # SVG rendering
   brew "mkcert"          # local HTTPS certificates
   brew "mongosh"         # MongoDB shell
+  brew "openjdk"         # Java language
   brew "poppler"         # PDF tools
   brew "rsync"           # file sync
   brew "tlrc"            # tldr pages
