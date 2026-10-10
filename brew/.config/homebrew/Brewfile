@@ -1,4 +1,5 @@
 brew "apify-cli"        # Apify CLI
+brew "ast-grep"         # structural code search and rewrite
 brew "bat"              # cat with syntax highlighting
 brew "cmake"            # build system
 brew "duckdb"           # analytical SQL database
@@ -15,6 +16,7 @@ brew "gopls"            # Go language server
 brew "go-task"          # Taskfile runner
 brew "herdr"            # agent multiplexer
 brew "hunk"             # diff viewer for agent changes
+brew "jq"               # JSON processor
 brew "just"             # command runner
 brew "lazydocker"       # Docker TUI
 brew "lazygit"          # Git TUI
@@ -23,6 +25,7 @@ brew "neovim"           # editor
 brew "pfetch-rs"        # system info
 brew "pi-coding-agent"  # pi coding agent
 brew "ripgrep"          # fast grep
+brew "shellcheck"       # shell script linter
 brew "sqlc"             # Go code from SQL
 brew "starship"         # shell prompt
 brew "stow"             # symlink farm for dotfiles
