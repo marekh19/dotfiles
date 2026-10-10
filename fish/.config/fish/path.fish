@@ -34,9 +34,6 @@ end
 set -gx BUN_INSTALL "$HOME/.bun"
 fish_add_path $BUN_INSTALL/bin
 
-# opencode
-fish_add_path $HOME/.opencode/bin
-
 # fnm – must come after brew shellenv so fnm's bin takes precedence over /opt/homebrew/bin/node
 if command -q fnm
     fnm env --use-on-cd --shell fish | source
