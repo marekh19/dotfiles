@@ -1,0 +1,97 @@
+brew "apify-cli"        # Apify CLI
+brew "bat"              # cat with syntax highlighting
+brew "cmake"            # build system
+brew "duckdb"           # analytical SQL database
+brew "eza"              # modern ls
+brew "fd"               # fast find
+brew "fish"             # shell
+brew "fisher"           # fish plugin manager
+brew "fnm"              # Node version manager
+brew "fzf"              # fuzzy finder
+brew "gh"               # GitHub CLI
+brew "git-delta"        # Git diff pager
+brew "go"               # Go language
+brew "gopls"            # Go language server
+brew "go-task"          # Taskfile runner
+brew "herdr"            # agent multiplexer
+brew "hunk"             # diff viewer for agent changes
+brew "just"             # command runner
+brew "lazydocker"       # Docker TUI
+brew "lazygit"          # Git TUI
+brew "lua"              # Lua language
+brew "neovim"           # editor
+brew "pfetch-rs"        # system info
+brew "pi-coding-agent"  # pi coding agent
+brew "ripgrep"          # fast grep
+brew "sqlc"             # Go code from SQL
+brew "starship"         # shell prompt
+brew "stow"             # symlink farm for dotfiles
+brew "stylua"           # Lua formatter
+brew "tailscale"        # VPN
+brew "tailwindcss"      # Tailwind CSS CLI
+brew "tree-sitter"      # parsing library
+brew "tree-sitter-cli"  # tree-sitter parser CLI
+brew "uv"               # Python package manager
+brew "yazi"             # file manager TUI
+brew "yq"               # YAML/JSON processor
+brew "zoxide"           # smart cd
+
+if OS.mac?
+  tap "dopplerhq/doppler", "https://github.com/DopplerHQ/homebrew-doppler.git", trusted: true  # Doppler's own tap
+  tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"  # source of borders
+  tap "nikitabobko/tap"  # source of AeroSpace
+  tap "steipete/tap"     # source of CodexBar
+
+  brew "awscli"          # AWS CLI
+  brew "colima", restart_service: :changed  # container runtime
+  brew "docker"          # Docker CLI
+  brew "docker-compose"  # multi-container Docker
+  brew "doppler"         # secrets CLI
+  brew "gcc"             # GNU compilers
+  brew "gnupg"           # GPG encryption
+  brew "htop"            # process viewer
+  brew "k6"              # load testing
+  brew "librsvg"         # SVG rendering
+  brew "mkcert"          # local HTTPS certificates
+  brew "mongosh"         # MongoDB shell
+  brew "poppler"         # PDF tools
+  brew "rsync"           # file sync
+  brew "tlrc"            # tldr pages
+  brew "felixkratz/formulae/borders", trusted: true  # window borders
+
+  cask "1password"                      # password manager
+  cask "nikitabobko/tap/aerospace", trusted: true  # tiling window manager
+  cask "betterdisplay"                  # display settings
+  cask "bitwarden"                      # password manager
+  cask "calibre"                        # e-book manager
+  cask "codex"                          # OpenAI coding agent
+  cask "steipete/tap/codexbar", trusted: true  # AI usage in menu bar
+  cask "dbeaver-community"              # database GUI
+  cask "discord"                        # chat
+  cask "figma"                          # design tool
+  cask "font-atkinson-hyperlegible"     # readable sans font
+  cask "font-geist-mono"                # Vercel mono font
+  cask "font-jetbrains-mono"            # terminal font
+  cask "font-maple-mono"                # rounded mono font
+  cask "font-monaspace"                 # GitHub mono fonts
+  cask "font-symbols-only-nerd-font"    # Nerd Font icons
+  cask "ghostty"                        # terminal
+  cask "grammarly-desktop"              # grammar checker
+  cask "meetingbar"                     # next meeting in menu bar
+  cask "notion"                         # notes and docs
+  cask "obsidian"                       # Markdown notes
+  cask "openlogi"                       # Logi Options+ alternative
+  cask "prusaslicer"                    # 3D print slicer
+  cask "raycast"                        # launcher
+  cask "slack"                          # team chat
+  cask "spotify"                        # music
+  cask "studio-3t-community"            # MongoDB GUI
+  cask "visual-studio-code"             # code editor
+  cask "vlc"                            # media player
+  cask "zen"                            # web browser
+end
+
+if OS.linux?
+  brew "bubblewrap"  # sandboxing, Linux only
+  brew "ollama"      # local LLMs
+end

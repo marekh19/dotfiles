@@ -9,6 +9,9 @@ else if command -q brew
     eval (brew shellenv)
 end
 
+# brew bundle uses this Brewfile when no --file is given
+set -gx HOMEBREW_BUNDLE_FILE ~/.config/homebrew/Brewfile
+
 # PNPM
 if not set -q PNPM_HOME
     if set -q XDG_DATA_HOME

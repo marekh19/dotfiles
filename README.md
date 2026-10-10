@@ -13,6 +13,7 @@ My personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 - **WM:** [AeroSpace](https://github.com/nikitabobko/AeroSpace)
 - **Theme:** [meowsoot](https://github.com/marekh19/meowsoot.nvim) - my own creation
 - **Font:** JetBrains Mono
+- **Packages:** [Homebrew](https://brew.sh/) on macOS and Linux
 
 ## Tools
 
@@ -23,11 +24,13 @@ My personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 
 ## Usage
 
-Clone into your home directory and symlink any config with `stow`:
+Install [Homebrew](https://brew.sh/) and clone this repo into your home
+directory. Then install the packages and symlink any config with `stow`:
 
 ```sh
 cd ~/dotfiles
-stow bat fish fzf ghostty git herdr lazygit nvim starship  # …or any other package
+brew bundle install --file=brew/.config/homebrew/Brewfile  # also installs stow
+stow bat brew fish fzf ghostty git herdr lazygit nvim starship  # …or any other package
 
 # bat and Delta: compile the bat themes (rerun after adding a .tmTheme)
 bat cache --build
@@ -35,6 +38,50 @@ bat cache --build
 # herdr: install the Neovim navigation plugin
 herdr plugin install paulbkim-dev/vim-herdr-navigation
 ```
+
+## Packages
+
+Homebrew installs the packages on both my machines, a MacBook and a Linux
+server. `brew/.config/homebrew/Brewfile` lists them:
+
+- Entries at the top install on both systems.
+- Entries inside `if OS.mac?` or `if OS.linux?` install only on that system.
+
+`fish/.config/fish/path.fish` sets `HOMEBREW_BUNDLE_FILE` to this file, so
+`brew bundle` works from any directory. To add a package, add its line to the
+Brewfile and run `brew bundle install`. To remove one, delete its line and run
+`brew bundle cleanup`.
+
+| Command | What it does |
+|---|---|
+| `brew bundle install` | Installs missing packages and upgrades outdated ones |
+| `brew bundle check` | Reports whether the machine matches the Brewfile |
+| `brew bundle cleanup` | Lists installed packages the Brewfile doesn't list, then asks before it uninstalls them |
+
+Don't run `brew bundle dump --force`. It overwrites the Brewfile and deletes the
+`OS` blocks and comments. To print what is installed, run
+`brew bundle dump --file=-`.
+
+To make Homebrew's Fish the login shell, add it to `/etc/shells` first:
+
+```fish
+command -s fish | sudo tee -a /etc/shells
+chsh -s (command -s fish)
+```
+
+### Linux
+
+- **Not from Homebrew:** Docker Engine and cloudflared run as system services
+  and come from their vendors' apt repositories. An Ubuntu release upgrade can
+  disable these sources by renaming them to `*.disabled` in
+  `/etc/apt/sources.list.d/`.
+- **Tailscale:** comes from Homebrew, but `tailscaled` needs root. `sudo`
+  doesn't find `brew` on its PATH, so use the full path. After
+  `brew upgrade tailscale`, run the same command with `restart`:
+
+  ```fish
+  sudo --preserve-env=HOME /home/linuxbrew/.linuxbrew/bin/brew services start tailscale
+  ```
 
 ## Theming
 
