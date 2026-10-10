@@ -65,9 +65,6 @@ abbr --add pb 'pnpm run build'
 abbr --add pt 'pnpm run test'
 abbr --add pch 'pnpm run changeset'
 
-# Cursor agent
-abbr --add ca cursor-agent
-
 # Lazy Git / Docker
 abbr --add lg lazygit
 abbr --add ld lazydocker
