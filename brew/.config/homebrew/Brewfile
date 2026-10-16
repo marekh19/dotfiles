@@ -30,12 +30,12 @@ brew "sqlc"             # Go code from SQL
 brew "starship"         # shell prompt
 brew "stow"             # symlink farm for dotfiles
 brew "stylua"           # Lua formatter
+brew "superfile"        # file manager TUI
 brew "tailscale"        # VPN
 brew "tailwindcss"      # Tailwind CSS CLI
 brew "tree-sitter"      # parsing library
 brew "tree-sitter-cli"  # tree-sitter parser CLI
 brew "uv"               # Python package manager
-brew "yazi"             # file manager TUI
 brew "yq"               # YAML/JSON processor
 brew "zoxide"           # smart cd
 
