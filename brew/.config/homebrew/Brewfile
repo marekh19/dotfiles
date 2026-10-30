@@ -90,7 +90,7 @@ if OS.mac?
   cask "slack"                          # team chat
   cask "spotify"                        # music
   cask "studio-3t-community"            # MongoDB GUI
-  cask "visual-studio-code"             # code editor
+  cask "telegram"                       # Telegram desktop
   cask "vlc"                            # media player
   cask "zen"                            # web browser
 end
