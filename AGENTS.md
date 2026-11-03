@@ -43,6 +43,7 @@ Applies to everything I read: chat, investigations, reports, issue and PR bodies
 - Never push unless I say so, or unless push is a documented step of a slash command currently running. After a rebase, amend, or commit on a published branch, stop after the commit. I'll push.
 - No Claude attribution in commits or PR bodies: no `Co-Authored-By` trailer or Claude Code footer.
 - Never post replies to GitHub review comments yourself. Draft the reply in the session and let me copy it over.
+- To edit a PR or issue body, fetch the live body and change only the section you're updating. Never republish a local draft, and never touch sections I wrote.
 
 ## Tooling
 
