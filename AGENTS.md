@@ -51,3 +51,11 @@ Available: `gh` (authenticated, SSH), `rg`, `fd`, `fzf`, `jq`, `bat`, `delta`, `
 
 - Node comes from `fnm`. Run it through the project's version, not a system binary.
 - Shell is fish. Use `bash -c` for bash-specific syntax.
+
+## Terminal
+
+Check which multiplexer you run in before any task that involves herdr or another terminal: workspaces, spaces, tabs, panes or splits; running a command, server or agent in another terminal; reading its output or screen; sending it text or keys; waiting for its output or agent status; closing it; or changing layouts, keys or mods.
+
+- `HERDR_ENV=1`: the `herdr` terminal multiplexer. Use the `herdr` skill.
+- `HC_TERMINAL_ID` set: the Herdr app. For panes, tabs and splits, run `herdr-app --skill`. To start, read, send to, wait on or close terminals and agents, run `hc --skill`. To change layouts, keys or mods, read `~/.config/herdr-app/AGENTS.md`.
+- Neither: ask me. Don't fall back to Ghostty or tmux.
