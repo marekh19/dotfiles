@@ -9,6 +9,7 @@ set -euo pipefail
 read -r -a ROOTS <<<"${GIT_SWEEP_ROOTS:-$HOME/coding/apify $HOME/coding/personal}"
 MIN_IDLE_DAYS=${GIT_SWEEP_MIN_IDLE_DAYS:-3}
 ARCHIVE_DAYS=${GIT_SWEEP_ARCHIVE_DAYS:-30}
+MAX_PARALLEL_REPOS=8
 LOG_FILE=${XDG_STATE_HOME:-$HOME/.local/state}/git-sweep/deleted.tsv
 NOW=$(date +%s)
 TODAY=$(date +%F)
@@ -214,8 +215,12 @@ sweep_repo() {
   fi
 
   # "<head oid> <head branch> #<number>" for each merged PR. Empty if gh is unavailable.
-  MERGED_PRS=$(gh pr list --state merged --limit 1000 --json number,headRefName,headRefOid \
-    --jq '.[] | "\(.headRefOid) \(.headRefName) #\(.number)"' 2>/dev/null || true)
+  # Only branches with commits outside the default branch need it, and the call takes seconds.
+  MERGED_PRS=""
+  if [[ -n $(git for-each-ref --no-merged "$DEFAULT_REF" --format=x refs/heads) ]]; then
+    MERGED_PRS=$(gh pr list --state merged --limit 1000 --json number,headRefName,headRefOid \
+      --jq '.[] | "\(.headRefOid) \(.headRefName) #\(.number)"' 2>/dev/null || true)
+  fi
 
   sweep_worktrees
   sweep_branches
@@ -228,10 +233,20 @@ if [[ -n $only_repo ]]; then
   exit 0
 fi
 
+# Repos run in parallel because fetch and gh wait on the network. Each repo's
+# output is buffered and printed in order, so it does not interleave.
+out_dir=$(mktemp -d)
+trap 'rm -rf "$out_dir"' EXIT
+count=0
 for root in "${ROOTS[@]}"; do
   for repo in "$root"/*/; do
     repo=${repo%/}
     [[ -d $repo/.git ]] || continue
-    (sweep_repo "$repo") || echo "  error  repo   sweep failed, see output above"
+    while (($(jobs -rp | wc -l) >= MAX_PARALLEL_REPOS)); do wait -n || true; done
+    { (sweep_repo "$repo") || echo "  error  repo   sweep failed, see output above"; } \
+      >"$out_dir/$(printf %04d "$count")" 2>&1 &
+    count=$((count + 1))
   done
 done
+wait
+cat "$out_dir"/* 2>/dev/null || true
