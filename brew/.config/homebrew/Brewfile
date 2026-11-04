@@ -81,6 +81,7 @@ if OS.mac?
   cask "font-symbols-only-nerd-font"    # Nerd Font icons
   cask "ghostty"                        # terminal
   cask "grammarly-desktop"              # grammar checker
+  cask "herdr-app"                      # herdr GUI
   cask "meetingbar"                     # next meeting in menu bar
   cask "notion"                         # notes and docs
   cask "obsidian"                       # Markdown notes
