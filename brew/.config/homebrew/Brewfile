@@ -99,4 +99,5 @@ end
 if OS.linux?
   brew "bubblewrap"  # sandboxing, Linux only
   brew "ollama"      # local LLMs
+  brew "imagemagick" # image tool
 end
