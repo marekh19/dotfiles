@@ -1,0 +1,237 @@
+#!/usr/bin/env bash
+# Removes finished local branches and linked worktrees. Dry run unless --apply.
+# A deleted branch tip is kept under refs/sweep-archive/<date>/<branch> for
+# GIT_SWEEP_ARCHIVE_DAYS, so `git branch <name> refs/sweep-archive/<date>/<name>` restores it.
+set -euo pipefail
+
+[[ -d /proc/self ]] || { echo "git-sweep: needs Linux /proc to detect worktrees in use" >&2; exit 1; }
+
+read -r -a ROOTS <<<"${GIT_SWEEP_ROOTS:-$HOME/coding/apify $HOME/coding/personal}"
+MIN_IDLE_DAYS=${GIT_SWEEP_MIN_IDLE_DAYS:-3}
+ARCHIVE_DAYS=${GIT_SWEEP_ARCHIVE_DAYS:-30}
+LOG_FILE=${XDG_STATE_HOME:-$HOME/.local/state}/git-sweep/deleted.tsv
+NOW=$(date +%s)
+TODAY=$(date +%F)
+
+is_apply=false
+only_repo=""
+
+usage() {
+  cat <<EOF
+Usage: git-sweep [--apply] [--repo PATH]
+
+Without --apply, prints what it would delete and why it keeps the rest.
+Repos: direct children of ${ROOTS[*]} (override with GIT_SWEEP_ROOTS).
+
+A branch is finished when its tip is in origin/<default>, or is the head of a
+merged GitHub PR (squash merges), and it has been idle ${MIN_IDLE_DAYS}+ days.
+A linked worktree is finished when its branch is finished, it is clean, no
+process has its cwd inside it, and it has been idle ${MIN_IDLE_DAYS}+ days.
+EOF
+}
+
+while (($#)); do
+  case $1 in
+    --apply) is_apply=true ;;
+    --repo) only_repo=$(realpath "$2"); shift ;;
+    -h | --help) usage; exit 0 ;;
+    *) echo "unknown argument: $1" >&2; usage >&2; exit 2 ;;
+  esac
+  shift
+done
+
+say() { printf '  %-7s %-6s %s\n' "$1" "$2" "$3"; }
+
+# A worktree is in use if a process has its cwd or an open file inside it,
+# or Neovim has a swap file for a file inside it.
+is_path_in_use() {
+  local path=$1 targets
+  # Not piped into awk: with pipefail, find's SIGPIPE after an early awk exit would read as "not in use".
+  targets=$(find /proc/[0-9]*/cwd /proc/[0-9]*/fd/ -maxdepth 1 -type l -printf '%l\n' 2>/dev/null || true)
+  awk -v p="$path" '$0 == p || index($0, p "/") == 1 { f = 1; exit } END { exit !f }' <<<"$targets" && return 0
+  # Neovim names swap files after the edited file's path, with % in place of /.
+  compgen -G "${XDG_STATE_HOME:-$HOME/.local/state}/nvim/swap/${path//\//%}%*" >/dev/null
+}
+
+days_since() { echo $(((NOW - $1) / 86400)); }
+
+# Prints why a branch is finished, or returns 1.
+branch_done_reason() {
+  local branch=$1 tip pr_oid
+  tip=$(git rev-parse "refs/heads/$branch")
+  if git merge-base --is-ancestor "$tip" "$DEFAULT_REF"; then
+    echo "contained in $DEFAULT_REF"
+    return 0
+  fi
+  if grep -q "^$tip " <<<"$MERGED_PRS"; then
+    echo "tip is the head of merged PR $(grep -m1 "^$tip " <<<"$MERGED_PRS" | cut -d' ' -f3)"
+    return 0
+  fi
+  pr_oid=$(awk -v b="$branch" '$2 == b { print $1; exit }' <<<"$MERGED_PRS")
+  if [[ -n $pr_oid ]] && git merge-base --is-ancestor "$tip" "$pr_oid" 2>/dev/null; then
+    echo "contained in merged PR $(awk -v b="$branch" '$2 == b { print $3; exit }' <<<"$MERGED_PRS")"
+    return 0
+  fi
+  return 1
+}
+
+branch_keep_reason() {
+  local branch=$1 ahead track
+  ahead=$(git rev-list --count "$DEFAULT_REF..refs/heads/$branch")
+  track=$(git for-each-ref --format='%(upstream:track)' "refs/heads/$branch")
+  case $track in
+    "[gone]") echo "$ahead commits not in $DEFAULT_REF, remote branch deleted, no merged PR matches the tip" ;;
+    "") echo "$ahead commits not in $DEFAULT_REF" ;;
+    *) echo "$ahead commits not in $DEFAULT_REF, $track vs upstream" ;;
+  esac
+}
+
+branch_last_activity() {
+  local branch=$1 reflog commit
+  reflog=$(git reflog show --format=%ct -1 "refs/heads/$branch" 2>/dev/null || true)
+  commit=$(git log -1 --format=%ct "refs/heads/$branch")
+  echo "${reflog:-$commit}"
+}
+
+log_deleted() {
+  mkdir -p "$(dirname "$LOG_FILE")"
+  printf '%s\t%s\t%s\t%s\t%s\n' "$TODAY" "$REPO" "$1" "$2" "$3" >>"$LOG_FILE"
+}
+
+sweep_worktrees() {
+  local path="" branch="" head="" is_locked=false is_main=true
+  local gitdir activity reason
+
+  if $is_apply; then git worktree prune; else
+    git worktree prune --dry-run --verbose | sed 's/^/  prune  /'
+  fi
+
+  while IFS= read -r line || [[ -n $path ]]; do
+    case $line in
+      "worktree "*) path=${line#worktree }; continue ;;
+      "HEAD "*) head=${line#HEAD }; continue ;;
+      "branch "*) branch=${line#branch refs/heads/}; continue ;;
+      locked*) is_locked=true; continue ;;
+      "") ;;
+      *) continue ;;
+    esac
+
+    if $is_main; then
+      is_main=false
+    elif [[ ! -d $path ]]; then
+      : # handled by prune
+    elif $is_locked; then
+      say keep wt "$path (locked)"
+    elif is_path_in_use "$path"; then
+      say keep wt "$path (a process or Neovim buffer uses it)"
+    elif [[ -n $(git -C "$path" --no-optional-locks status --porcelain 2>/dev/null) ]]; then
+      say keep wt "$path (uncommitted or untracked changes)"
+    else
+      gitdir=$(git -C "$path" rev-parse --absolute-git-dir)
+      if compgen -G "$gitdir/rebase-*" >/dev/null || [[ -e $gitdir/MERGE_HEAD || -e $gitdir/CHERRY_PICK_HEAD || -e $gitdir/BISECT_LOG ]]; then
+        say keep wt "$path (rebase, merge, cherry-pick, or bisect in progress)"
+      else
+        # Not the index: any `git status`, including a shell prompt, rewrites it.
+        activity=$(stat -c %Y "$gitdir/logs/HEAD" "$gitdir/HEAD" 2>/dev/null | sort -n | tail -1)
+        if (($(days_since "$activity") < MIN_IDLE_DAYS)); then
+          say keep wt "$path (active $(days_since "$activity") days ago)"
+        elif [[ -z $branch ]]; then
+          if [[ -n $(git branch -r --contains "$head" 2>/dev/null) ]]; then
+            say delete wt "$path (detached at a commit that a remote branch contains)"
+            $is_apply && git worktree remove "$path" && log_deleted worktree "$path" "$head"
+          else
+            say keep wt "$path (detached at a commit no remote branch contains)"
+          fi
+        elif reason=$(branch_done_reason "$branch"); then
+          say delete wt "$path ($branch: $reason)"
+          $is_apply && git worktree remove "$path" && log_deleted worktree "$path" "$head"
+        else
+          say keep wt "$path ($branch: $(branch_keep_reason "$branch"))"
+        fi
+      fi
+    fi
+    path="" branch="" head="" is_locked=false
+  done < <(git worktree list --porcelain)
+}
+
+sweep_branches() {
+  local checked_out stashed branch tip reason idle
+  checked_out=$(git worktree list --porcelain | sed -n 's|^branch refs/heads/||p')
+  stashed=$(git stash list --format=%gs | sed -nE 's/^(WIP on|On) ([^:]+):.*/\2/p' | sort -u)
+
+  while IFS= read -r branch; do
+    [[ $branch == "$DEFAULT_BRANCH" ]] && continue
+    if grep -qxF "$branch" <<<"$checked_out"; then
+      reason=$(branch_done_reason "$branch") && say keep branch "$branch (finished, but checked out in a worktree)"
+      continue
+    fi
+    if grep -qxF "$branch" <<<"$stashed"; then
+      say keep branch "$branch (has a stash entry)"
+      continue
+    fi
+    if ! reason=$(branch_done_reason "$branch"); then
+      say keep branch "$branch ($(branch_keep_reason "$branch"))"
+      continue
+    fi
+    idle=$(days_since "$(branch_last_activity "$branch")")
+    if ((idle < MIN_IDLE_DAYS)); then
+      say keep branch "$branch (finished, but changed $idle days ago)"
+      continue
+    fi
+    say delete branch "$branch ($reason)"
+    if $is_apply; then
+      tip=$(git rev-parse "refs/heads/$branch")
+      # errexit is off inside the per-repo subshell, so chain to never delete an unarchived branch.
+      git update-ref "refs/sweep-archive/$TODAY/$branch" "$tip" &&
+        git branch -D --quiet "$branch" &&
+        log_deleted branch "$branch" "$tip"
+    fi
+  done < <(git for-each-ref --format='%(refname:short)' refs/heads)
+}
+
+expire_archive() {
+  local ref date
+  while IFS= read -r ref; do
+    date=$(cut -d/ -f3 <<<"$ref")
+    (($(days_since "$(date -d "$date" +%s)") > ARCHIVE_DAYS)) && git update-ref -d "$ref"
+  done < <(git for-each-ref --format='%(refname)' refs/sweep-archive)
+}
+
+sweep_repo() {
+  REPO=$1
+  cd "$REPO"
+  basename "$REPO"
+
+  DEFAULT_REF=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || true)
+  if [[ -z $DEFAULT_REF ]]; then
+    say skip repo "origin/HEAD is not set (run: git remote set-head origin --auto)"
+    return
+  fi
+  DEFAULT_BRANCH=${DEFAULT_REF#origin/}
+
+  if ! git fetch --prune --quiet origin 2>/dev/null; then
+    say warn repo "git fetch failed, using the last fetched state"
+  fi
+
+  # "<head oid> <head branch> #<number>" for each merged PR. Empty if gh is unavailable.
+  MERGED_PRS=$(gh pr list --state merged --limit 1000 --json number,headRefName,headRefOid \
+    --jq '.[] | "\(.headRefOid) \(.headRefName) #\(.number)"' 2>/dev/null || true)
+
+  sweep_worktrees
+  sweep_branches
+  $is_apply && expire_archive
+  return 0
+}
+
+if [[ -n $only_repo ]]; then
+  sweep_repo "$only_repo"
+  exit 0
+fi
+
+for root in "${ROOTS[@]}"; do
+  for repo in "$root"/*/; do
+    repo=${repo%/}
+    [[ -d $repo/.git ]] || continue
+    (sweep_repo "$repo") || echo "  error  repo   sweep failed, see output above"
+  done
+done
