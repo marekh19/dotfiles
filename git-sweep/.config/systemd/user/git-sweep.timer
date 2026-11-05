@@ -1,9 +1,8 @@
 [Unit]
-Description=Run git-sweep daily
+Description=Run git-sweep daily at 9:00 Prague time
 
 [Timer]
-OnCalendar=daily
-RandomizedDelaySec=1h
+OnCalendar=*-*-* 09:00 Europe/Prague
 Persistent=true
 
 [Install]

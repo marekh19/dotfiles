@@ -45,9 +45,8 @@ systemctl --user daemon-reload
 systemctl --user enable --now git-sweep.timer
 ```
 
-The timer runs `git-sweep --apply` once a day, at a random time within one
-hour of midnight. If the computer was off at that time, it runs at the next
-boot.
+The timer runs `git-sweep --apply` every day at 9:00 Prague time. If the
+machine was off at that time, it runs at the next boot.
 
 ## Usage
 
@@ -68,7 +67,8 @@ journalctl --user -u git-sweep.service         # output of past runs
 systemctl --user start git-sweep.service       # run now
 ```
 
-The timer has no SSH agent, so `git fetch` can fail. git-sweep then prints
+The timer runs without your login shell, so `git fetch` fails if no SSH agent
+or passphrase-free key is available to it. git-sweep then prints
 `warn` and uses the last fetched state, which can only make it keep more.
 
 ## Settings
