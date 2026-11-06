@@ -76,6 +76,7 @@ if OS.mac?
   cask "font-atkinson-hyperlegible"     # readable sans font
   cask "font-geist-mono"                # Vercel mono font
   cask "font-jetbrains-mono"            # terminal font
+  cask "font-literata"                  # Serif font for easy reading
   cask "font-maple-mono"                # rounded mono font
   cask "font-monaspace"                 # GitHub mono fonts
   cask "font-symbols-only-nerd-font"    # Nerd Font icons
