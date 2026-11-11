@@ -30,7 +30,8 @@ directory. Then install the packages and symlink any config with `stow`:
 ```sh
 cd ~/dotfiles
 brew bundle install --file=brew/.config/homebrew/Brewfile  # also installs stow
-stow bat brew fish fzf ghostty git herdr herdr-app lazygit nvim starship  # …or any other package
+stow bat brew fish fzf ghostty git herdr lazygit nvim starship  # …or any other package
+stow --no-folding herdr-app  # see "Before you stow"
 
 # bat and Delta: compile the bat themes (rerun after adding a .tmTheme)
 bat cache --build
@@ -38,6 +39,29 @@ bat cache --build
 # herdr: install the Neovim navigation plugin
 herdr plugin install paulbkim-dev/vim-herdr-navigation
 ```
+
+### Before you stow
+
+Run a dry run first. `-n` prints the links that stow would create and changes
+nothing:
+
+```sh
+stow -n -v <package>
+```
+
+The result depends on whether each folder of the package already exists in
+your home directory, for example `~/.config/herdr-app`:
+
+- **The folder exists:** stow links each file into it. Files that are not in
+  the repo stay in place. If a file with the same name exists, stow reports a
+  conflict and changes nothing. Move that file away and run stow again.
+- **The folder does not exist:** stow links the whole folder to the repo, so
+  every file the app writes there later lands in `~/dotfiles`. `.gitignore`
+  excludes the known runtime files of Fish, Neovim, Lazygit and herdr.
+
+The Herdr app writes its data, telemetry and caches into its config folder.
+Always stow it with `--no-folding`, so that stow creates real folders and links
+only the files.
 
 ## Packages
 
