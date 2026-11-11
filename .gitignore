@@ -26,3 +26,7 @@ herdr/.config/herdr/release-notes.json
 herdr/.config/herdr/plugins.json
 herdr/.config/herdr/.plugins.lock
 herdr/.config/herdr/plugins/
+
+# Herdr app: files the app writes into every mod folder
+herdr-app/.config/herdr-app/mods/*/jsconfig.json
+herdr-app/.config/herdr-app/mods/*/*.d.ts
