@@ -30,7 +30,7 @@ directory. Then install the packages and symlink any config with `stow`:
 ```sh
 cd ~/dotfiles
 brew bundle install --file=brew/.config/homebrew/Brewfile  # also installs stow
-stow bat brew fish fzf ghostty git herdr lazygit nvim starship  # …or any other package
+stow bat brew fish fzf ghostty git herdr herdr-app lazygit nvim starship  # …or any other package
 
 # bat and Delta: compile the bat themes (rerun after adding a .tmTheme)
 bat cache --build
@@ -109,6 +109,7 @@ each tool:
 | fzf | `fzf/.config/fzf/themes/<name>.conf` | `FZF_DEFAULT_OPTS_FILE` |
 | Lazygit | `lazygit/.config/lazygit/themes/<name>.yml` | `LG_CONFIG_FILE` |
 | Neovim | Colorscheme `<name>` from an installed plugin | `THEME_NVIM` |
+| Herdr app | `herdr-app/.config/herdr-app/themes/<name>.json` | Chosen by hand in the app's Settings |
 
 herdr, Starship and Yazi use the terminal colors and need nothing.
 
@@ -124,6 +125,8 @@ name.
 - **Neovim and Lazygit:** restart open instances. Lazygit opened from an old
   Neovim instance keeps the old colors.
 - **bat, fzf, Delta:** the next run uses the new theme.
+- **Herdr app:** `theme` does not change it. Choose the theme in the app's
+  Settings.
 
 Only interactive Fish shells set the environment variables. An app started
 some other way gets default colors, and Neovim falls back to `meowsoot`. After
