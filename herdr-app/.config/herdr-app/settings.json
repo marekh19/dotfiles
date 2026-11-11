@@ -1,0 +1,14 @@
+{
+  "zoom": 1.1,
+  "sounds": {
+    "enabled": true
+  },
+  "font_size": 13.0,
+  "font_ligatures": true,
+  "ui_font": "Geist",
+  "minimum_contrast": 1.0,
+  "theme": {
+    "light": "meowsoot-dawn",
+    "dark": "meowsoot"
+  }
+}

@@ -133,7 +133,7 @@ each tool:
 | fzf | `fzf/.config/fzf/themes/<name>.conf` | `FZF_DEFAULT_OPTS_FILE` |
 | Lazygit | `lazygit/.config/lazygit/themes/<name>.yml` | `LG_CONFIG_FILE` |
 | Neovim | Colorscheme `<name>` from an installed plugin | `THEME_NVIM` |
-| Herdr app | `herdr-app/.config/herdr-app/themes/<name>.json` | Chosen by hand in the app's Settings |
+| Herdr app | `herdr-app/.config/herdr-app/themes/<name>.json` | `theme` in `herdr-app/.config/herdr-app/settings.json`. A theme chosen in the app's Settings overrides it |
 
 herdr, Starship and Yazi use the terminal colors and need nothing.
 
@@ -149,8 +149,8 @@ name.
 - **Neovim and Lazygit:** restart open instances. Lazygit opened from an old
   Neovim instance keeps the old colors.
 - **bat, fzf, Delta:** the next run uses the new theme.
-- **Herdr app:** `theme` does not change it. Choose the theme in the app's
-  Settings.
+- **Herdr app:** `theme` does not change it. Edit `theme` in its
+  `settings.json`, or choose a theme in the app's Settings.
 
 Only interactive Fish shells set the environment variables. An app started
 some other way gets default colors, and Neovim falls back to `meowsoot`. After
