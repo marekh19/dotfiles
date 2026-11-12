@@ -31,7 +31,6 @@ brew "starship"         # shell prompt
 brew "stow"             # symlink farm for dotfiles
 brew "stylua"           # Lua formatter
 brew "superfile"        # file manager TUI
-brew "tailscale"        # VPN
 brew "tailwindcss"      # Tailwind CSS CLI
 brew "tree-sitter"      # parsing library
 brew "tree-sitter-cli"  # tree-sitter parser CLI
@@ -92,6 +91,7 @@ if OS.mac?
   cask "slack"                          # team chat
   cask "spotify"                        # music
   cask "studio-3t-community"            # MongoDB GUI
+  cask "tailscale-app"                  # VPN
   cask "telegram"                       # Telegram desktop
   cask "vlc"                            # media player
   cask "zen"                            # web browser
@@ -101,4 +101,5 @@ if OS.linux?
   brew "bubblewrap"  # sandboxing, Linux only
   brew "ollama"      # local LLMs
   brew "imagemagick" # image tool
+  brew "tailscale"   # VPN
 end
