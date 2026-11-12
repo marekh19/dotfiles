@@ -1,0 +1,9 @@
+[Unit]
+Description=Run disk-sweep every Monday at 10:00 Prague time
+
+[Timer]
+OnCalendar=Mon *-*-* 10:00 Europe/Prague
+Persistent=true
+
+[Install]
+WantedBy=timers.target

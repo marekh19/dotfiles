@@ -1,0 +1,256 @@
+#!/usr/bin/env bash
+# Frees disk space by deleting caches and rebuildable files that have not been
+# used recently. Dry run unless --apply.
+set -euo pipefail
+shopt -s nullglob
+
+[[ -d /proc/self ]] || { echo "disk-sweep: needs Linux /proc to detect repos in use" >&2; exit 1; }
+
+read -r -a ROOTS <<<"${DISK_SWEEP_ROOTS:-$HOME/coding/apify $HOME/coding/personal}"
+IDLE_DAYS=${DISK_SWEEP_IDLE_DAYS:-30}
+DOCKER_CACHE_DAYS=${DISK_SWEEP_DOCKER_CACHE_DAYS:-7}
+DOCKER_IMAGE_DAYS=${DISK_SWEEP_DOCKER_IMAGE_DAYS:-14}
+PNPM_STORE_ROOT=${DISK_SWEEP_PNPM_STORE_ROOT:-$HOME/.local/share/pnpm/store}
+LOG_FILE=${XDG_STATE_HOME:-$HOME/.local/state}/disk-sweep/deleted.tsv
+TODAY=$(date +%F)
+
+# Cache folders whose entries are deleted when no file inside was read for IDLE_DAYS.
+CACHE_GLOBS=(
+  "$HOME/.npm/_npx/*"
+  "$HOME/.cache/Cypress/*"
+  "$HOME/.cache/ms-playwright/*"
+  "$HOME/.cache/puppeteer/*/*"
+  "$HOME/.cache/node/corepack/v1/*/*"
+)
+
+# The timer has no terminal, so corepack must not wait for a download prompt.
+export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
+is_apply=false
+
+usage() {
+  cat <<EOF
+Usage: disk-sweep [--apply]
+
+Without --apply, prints what it would delete and why it keeps the rest.
+Deletes Docker build cache and images, old Codex releases, unused pnpm and npm
+cache entries, test browsers and corepack versions not used for ${IDLE_DAYS}+
+days, and node_modules of repos in ${ROOTS[*]} that were idle for ${IDLE_DAYS}+ days.
+EOF
+}
+
+while (($#)); do
+  case $1 in
+    --apply) is_apply=true ;;
+    -h | --help) usage; exit 0 ;;
+    *) echo "unknown argument: $1" >&2; usage >&2; exit 2 ;;
+  esac
+  shift
+done
+
+say() { printf '  %-7s %-6s %s\n' "$1" "$2" "$3"; }
+
+log_deleted() {
+  mkdir -p "$(dirname "$LOG_FILE")"
+  printf '%s\t%s\t%s\t%s\n' "$TODAY" "$1" "$2" "$3" >>"$LOG_FILE"
+}
+
+remove() {
+  local kind=$1 path=$2 why=$3 size
+  size=$(du -sh "$path" 2>/dev/null | cut -f1)
+  say delete "$kind" "$path ($size, $why)"
+  if $is_apply; then
+    rm -rf -- "$path"
+    log_deleted "$kind" "$path" "$size"
+  fi
+}
+
+# Runs a command, or only prints it in a dry run.
+run() {
+  local kind=$1
+  shift
+  say run "$kind" "$*"
+  if $is_apply; then "$@"; fi
+}
+
+node_exec() { fnm exec --using default -- "$@"; }
+
+# True if any file inside was read or written in the last IDLE_DAYS. Only files
+# count: this scan itself updates the access time of the folders it lists.
+is_recently_used() {
+  [[ -n $(find "$1" -maxdepth 5 -type f -atime -"$IDLE_DAYS" -print -quit 2>/dev/null) ]]
+}
+
+# Same check as in git-sweep: a process has its cwd or an open file inside the
+# path, or Neovim has a swap file for a file inside it.
+is_path_in_use() {
+  local path=$1 targets
+  # Not piped into awk: with pipefail, find's SIGPIPE after an early awk exit would read as "not in use".
+  targets=$(find /proc/[0-9]*/cwd /proc/[0-9]*/fd/ -maxdepth 1 -type l -printf '%l\n' 2>/dev/null || true)
+  awk -v p="$path" '$0 == p || index($0, p "/") == 1 { f = 1; exit } END { exit !f }' <<<"$targets" && return 0
+  # Neovim names swap files after the edited file's path, with % in place of /.
+  compgen -G "${XDG_STATE_HOME:-$HOME/.local/state}/nvim/swap/${path//\//%}%*" >/dev/null
+}
+
+# A repo is active if a file outside node_modules and .git changed, or HEAD
+# moved in any of its worktrees (commit, checkout, pull, rebase).
+is_repo_active() {
+  local repo=$1
+  [[ -n $(find "$repo" \( -name node_modules -o -name .git \) -prune -o -type f -mtime -"$IDLE_DAYS" -print -quit 2>/dev/null) ]] && return 0
+  [[ -d $repo/.git ]] || return 1
+  [[ -n $(find "$repo/.git" -maxdepth 4 -name HEAD -not -path '*/refs/*' -mtime -"$IDLE_DAYS" -print -quit 2>/dev/null) ]]
+}
+
+repos() {
+  local root repo
+  for root in "${ROOTS[@]}"; do
+    for repo in "$root"/*/; do echo "${repo%/}"; done
+  done
+}
+
+sweep_node_modules() {
+  local repo nm
+  while IFS= read -r repo; do
+    [[ -d $repo/node_modules ]] || continue
+    if is_repo_active "$repo"; then
+      say keep nm "$repo (used in the last $IDLE_DAYS days)"
+    elif is_path_in_use "$repo"; then
+      say keep nm "$repo (a process or Neovim buffer uses it)"
+    else
+      while IFS= read -r -d '' nm; do
+        remove nm "$nm" "repo idle for $IDLE_DAYS+ days"
+      done < <(find "$repo" -name .git -prune -o -type d -name node_modules -print0 -prune)
+    fi
+  done < <(repos)
+}
+
+# Each pnpm major version has its own store. A store that a project uses is
+# pruned from inside that project, so corepack runs the matching pnpm version.
+sweep_pnpm() {
+  local store repo user
+  for store in "$PNPM_STORE_ROOT"/v*/; do
+    store=${store%/}
+    user=""
+    while IFS= read -r repo; do
+      [[ -f $repo/node_modules/.modules.yaml ]] || continue
+      if grep -qE "^ *\"?storeDir\"?: \"?$store\"?,?$" "$repo/node_modules/.modules.yaml"; then
+        user=$repo
+        break
+      fi
+    done < <(repos)
+    if [[ -z $user ]]; then
+      # Files stay in node_modules elsewhere, because pnpm hard-links them from the store.
+      remove pnpm "$store" "no repo in ${ROOTS[*]} uses this store"
+    else
+      say run pnpm "pnpm store prune in $user ($store)"
+      if $is_apply; then (cd "$user" && node_exec pnpm store prune); fi
+    fi
+  done
+}
+
+sweep_npm() {
+  local content=$HOME/.npm/_cacache/content-v2 size
+  [[ -d $content ]] || return 0
+  size=$(find "$content" -type f -atime +"$IDLE_DAYS" -printf '%s\n' | awk '{ s += $1 } END { printf "%.1fG", s / 2^30 }')
+  say delete npm "files in $content not read for $IDLE_DAYS+ days ($size)"
+  if $is_apply; then
+    find "$content" -type f -atime +"$IDLE_DAYS" -delete
+    # Drops the index entries whose content is now missing.
+    node_exec npm cache verify >/dev/null
+    log_deleted npm "$content" "$size"
+  fi
+}
+
+sweep_caches() {
+  local glob dir
+  for glob in "${CACHE_GLOBS[@]}"; do
+    # Unquoted on purpose: the glob must expand.
+    for dir in $glob; do
+      [[ -d $dir ]] || continue
+      if ! is_recently_used "$dir"; then remove cache "$dir" "not used for $IDLE_DAYS+ days"; fi
+    done
+  done
+}
+
+# Keeps the release that `current` points to and the ones in selection-history,
+# which Codex may roll back to.
+sweep_codex() {
+  local pkg current release name
+  for pkg in "$HOME"/.codex/packages/*/; do
+    pkg=${pkg%/}
+    [[ -d $pkg/releases && -L $pkg/current ]] || continue
+    current=$(basename "$(readlink -f "$pkg/current")")
+    [[ -d $pkg/releases/$current ]] || { say skip codex "$pkg (current does not point into releases)"; continue; }
+    (
+      flock -n 9 || { say skip codex "$pkg (Codex is installing an update)"; exit 0; }
+      for release in "$pkg"/releases/*/; do
+        release=${release%/}
+        name=${release##*/}
+        if [[ $name == "$current" ]] || grep -qxF "$name" "$pkg/selection-history" 2>/dev/null; then continue; fi
+        remove codex "$release" "not current and not in selection-history"
+      done
+    ) 9>"$pkg/install.lock"
+  done
+}
+
+sweep_docker() {
+  if ! docker info >/dev/null 2>&1; then
+    say skip docker "the Docker daemon is not reachable"
+    return 0
+  fi
+  run docker docker builder prune --all --force --filter "until=$((DOCKER_CACHE_DAYS * 24))h"
+  # `until` is the image creation time. Images that any container uses are never removed.
+  run docker docker image prune --all --force --filter "until=$((DOCKER_IMAGE_DAYS * 24))h"
+}
+
+sweep_tools() {
+  if command -v uv >/dev/null; then run uv uv cache prune; fi
+  if command -v brew >/dev/null; then run brew brew cleanup --prune="$IDLE_DAYS"; fi
+}
+
+# Reports Node versions that nothing pins. Repos pin versions in .nvmrc or
+# .node-version; deleting by guess could break them, so this only prints.
+report_node() {
+  local pins version used pin
+  command -v fnm >/dev/null || return 0
+  pins=$(repos | while IFS= read -r repo; do cat "$repo/.nvmrc" "$repo/.node-version" 2>/dev/null || true; done | tr -d ' v\r')
+  while read -r _ version alias; do
+    [[ $version == v* && -z ${alias:-} ]] || continue
+    used=false
+    while IFS= read -r pin; do
+      if [[ -n $pin && (${version#v} == "$pin" || ${version#v} == "$pin".*) ]]; then used=true; fi
+    done <<<"$pins"
+    if ! $used; then say info node "$version (no repo pins it; remove with: fnm uninstall $version)"; fi
+  done < <(fnm list)
+}
+
+# Runs each step with errexit on, so a failing command stops that step before
+# it deletes anything based on bad input. The other steps still run.
+step() {
+  local fn=$1 status
+  echo "${fn#*_}"
+  set +e
+  (set -e; "$fn")
+  status=$?
+  set -e
+  if ((status != 0)); then say error "${fn#*_}" "step stopped after an error (exit $status)"; fi
+}
+
+$is_apply || echo "Dry run: nothing is deleted. Run with --apply to delete."
+avail_before=$(df --output=avail -B1 "$HOME" | tail -1)
+
+# node_modules goes before pnpm, so the prune can drop packages that only
+# the deleted node_modules used.
+step sweep_node_modules
+step sweep_pnpm
+step sweep_npm
+step sweep_caches
+step sweep_codex
+step sweep_docker
+step sweep_tools
+step report_node
+
+if $is_apply; then
+  avail_after=$(df --output=avail -B1 "$HOME" | tail -1)
+  echo "Freed $(numfmt --to=iec $((avail_after - avail_before))), $(df -h --output=avail "$HOME" | tail -1 | tr -d ' ') now available."
+fi
