@@ -66,7 +66,6 @@ if OS.mac?
   cask "nikitabobko/tap/aerospace", trusted: true  # tiling window manager
   cask "betterdisplay"                  # display settings
   cask "bitwarden"                      # password manager
-  cask "calibre"                        # e-book manager
   cask "codex"                          # OpenAI coding agent
   cask "steipete/tap/codexbar", trusted: true  # AI usage in menu bar
   cask "dbeaver-community"              # database GUI
