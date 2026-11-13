@@ -93,6 +93,7 @@ if OS.mac?
   cask "tailscale-app"                  # VPN
   cask "telegram"                       # Telegram desktop
   cask "vlc"                            # media player
+  cask "wispr-flow"                     # voice dictation
   cask "zen"                            # web browser
 end
 
