@@ -1,5 +1,6 @@
 brew "apify-cli"        # Apify CLI
 brew "ast-grep"         # structural code search and rewrite
+brew "atuin"            # shell history
 brew "bat"              # cat with syntax highlighting
 brew "cmake"            # build system
 brew "duckdb"           # analytical SQL database
