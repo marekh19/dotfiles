@@ -42,7 +42,7 @@ abbr --add hdu 'herdr update'
 
 # Brew
 abbr --add bbi 'brew bundle install'
-abbr --add bbc 'brew bundle check'
+abbr --add bbc 'brew bundle check --verbose'
 abbr --add bbcl 'brew bundle cleanup'
 abbr --add bup 'brew upgrade' # also upgrades dependencies, which brew bundle skips
 
