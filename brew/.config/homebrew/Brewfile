@@ -83,6 +83,7 @@ if OS.mac?
   cask "grammarly-desktop"              # grammar checker
   cask "herdr-app"                      # herdr GUI
   cask "meetingbar"                     # next meeting in menu bar
+  cask "mongodb-compass"                # MongoDB GUI
   cask "notion"                         # notes and docs
   cask "obsidian"                       # Markdown notes
   cask "openlogi"                       # Logi Options+ alternative
