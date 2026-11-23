@@ -5,7 +5,7 @@
 
 import { View, div } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
-import { run, hc, props, focused, spaces, closeOverlay, theme } from "herdr";
+import { run, hc, props, focused, spaces, openOverlay, closeOverlay, theme } from "herdr";
 
 const sendKeys = (terminal, key) => {
   if (!terminal) return;
@@ -19,6 +19,25 @@ const newSpace = () => {
   run("space.new", { machine: space?.machine ?? "" });
 };
 
+const ADJECTIVES = ["amber", "brave", "bright", "calm", "clever", "cosmic", "crisp", "curious", "dusty", "eager", "fancy", "fuzzy", "gentle", "golden", "happy", "humble", "jolly", "kind", "lively", "lucky", "mellow", "misty", "noble", "polite", "pretty", "proud", "quiet", "rapid", "rustic", "shiny", "silent", "silver", "sleepy", "smooth", "snowy", "spicy", "sunny", "swift", "tidy", "witty"];
+const NOUNS = ["acorn", "badger", "breeze", "cake", "canyon", "cedar", "cloud", "comet", "coral", "daisy", "falcon", "fern", "forest", "fox", "garden", "harbor", "island", "lantern", "lemon", "maple", "meadow", "moon", "otter", "panda", "pebble", "pine", "planet", "pond", "rabbit", "raven", "river", "rocket", "sparrow", "stone", "storm", "tiger", "tulip", "valley", "walnut", "willow"];
+const pick = (words) => words[Math.floor(Math.random() * words.length)];
+
+// Two random words and the local date, for example "pretty-cake-2026-11-20".
+const branchName = () => {
+  const now = new Date();
+  const date = [now.getFullYear(), now.getMonth() + 1, now.getDate()].map((n) => String(n).padStart(2, "0")).join("-");
+  return `${pick(ADJECTIVES)}-${pick(NOUNS)}-${date}`;
+};
+
+// The shipped worktree dialog creates the checkout at once when it gets a
+// branch. It checks out a branch that already exists instead of creating one.
+const newWorktree = () => {
+  const at = focused();
+  if (!at) return;
+  openOverlay({ mod: "worktree", kind: "dialog", width: 460, height: 280, props: { space: at.space, folder: at.cwd ?? undefined, action: "new", branch: branchName() } });
+};
+
 const DIGITS =["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 // `keys` match a keystroke ("ctrl-l") or the typed character ("&", "\\").
@@ -30,6 +49,7 @@ const BINDINGS = [
   { keys: ["&"], label: "close tab", act: () => run("tab.close", {}) },
   { keys: ["s"], label: "pick tab", act: () => run("mod.open", { name: "picker" }) },
   { keys: ["shift-n", "N"], show: "shift-n", label: "new space", act: newSpace },
+  { keys: ["w"], label: "new worktree", act: newWorktree },
   { keys: ["\\"], label: "split right", act: () => run("pane.split", { direction: "right" }) },
   { keys: ["-"], label: "split down", act: () => run("pane.split", { direction: "down" }) },
   { keys: ["m"], label: "zoom pane", act: () => run("pane.zoom", {}) },
