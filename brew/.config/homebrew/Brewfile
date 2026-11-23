@@ -22,6 +22,7 @@ brew "just"             # command runner
 brew "lazydocker"       # Docker TUI
 brew "lazygit"          # Git TUI
 brew "lua"              # Lua language
+brew "mongosh"          # MongoDB Shell
 brew "neovim"           # editor
 brew "pfetch-rs"        # system info
 brew "pi-coding-agent"  # pi coding agent
@@ -91,7 +92,6 @@ if OS.mac?
   cask "raycast"                        # launcher
   cask "slack"                          # team chat
   cask "spotify"                        # music
-  cask "studio-3t-community"            # MongoDB GUI
   cask "tailscale-app"                  # VPN
   cask "telegram"                       # Telegram desktop
   cask "vlc"                            # media player
