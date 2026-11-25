@@ -59,3 +59,11 @@ Check which multiplexer you run in before any task that involves herdr or anothe
 - `HERDR_ENV=1`: the `herdr` terminal multiplexer. Use the `herdr` skill.
 - `HC_TERMINAL_ID` set: the Herdr app. For panes, tabs and splits, run `herdr-app --skill`. To start, read, send to, wait on or close terminals and agents, run `hc --skill`. To change layouts, keys or mods, read `~/.config/herdr-app/AGENTS.md`.
 - Neither: ask me. Don't fall back to Ghostty or tmux.
+
+## Vault inbox
+
+To save an idea or note for me, write one new file to `Inbox/` in my Obsidian vault: `~/Documents/My Obsidian Vault/` on the Mac, `/opt/homelab/brain/vault/` on the homelab.
+
+- Name it `YYYY-MM-DD <short title>.md`.
+- Start with the front matter `created: YYYY-MM-DD`. Then write the idea in my words and one last line that names the repository it came from.
+- Touch only that one new file in the vault.
