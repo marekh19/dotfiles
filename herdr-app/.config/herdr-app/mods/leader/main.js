@@ -40,7 +40,7 @@ const newWorktree = () => {
 
 const DIGITS =["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-// `keys` match a keystroke ("ctrl-l") or the typed character ("&", "\\").
+// `keys` match a keystroke ("ctrl-a") or the typed character ("&", "\\").
 const BINDINGS = [
   { keys: ["c"], label: "new tab", act: () => run("tab.new", {}) },
   { keys: ["n"], label: "next tab", act: () => run("tab.next") },
@@ -61,7 +61,6 @@ const BINDINGS = [
   { keys: ["b"], label: "toggle sidebar", act: () => run("layout.toggle", { id: "sidebar" }) },
   { keys: [","], label: "settings", act: () => run("app.settings", {}) },
   { keys: ["d"], label: "close window", act: () => run("window.close") },
-  { keys: ["ctrl-l"], label: "clear screen", act: (t) => sendKeys(t, "ctrl+l") },
   { keys: ["ctrl-a"], label: "send ctrl-a", act: (t) => sendKeys(t, "ctrl+a") },
 ];
 

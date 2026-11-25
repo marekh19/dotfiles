@@ -50,14 +50,6 @@ type = "plugin_action"
 command = "vim-herdr-navigation.right"
 description = "navigate right (vim/herdr)"
 
-# Clear screen. Plain C-l is taken by nav above (same tradeoff as tmux), so send
-# it with the prefix. tmux: bind C-l send-keys 'C-l'
-[[keys.command]]
-key = "prefix+ctrl+l"
-type = "shell"
-command = "sh -c 'herdr pane send-keys \"$HERDR_ACTIVE_PANE_ID\" ctrl+l'"
-description = "clear screen"
-
 [ui.sound]
 enabled = true
 
