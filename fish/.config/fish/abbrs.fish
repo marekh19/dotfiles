@@ -72,6 +72,7 @@ abbr --add ld lazydocker
 # Utility
 abbr --add .. 'cd ..'
 abbr --add ... 'cd ../..'
+abbr --add cl clear
 abbr --add abbr 'bat ~/.config/fish/abbrs.fish'
 
 ## Fish
